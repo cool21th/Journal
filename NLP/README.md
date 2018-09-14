@@ -1,19 +1,13 @@
 # Results for Natural Language Process Paper
 * * * *
 
-## [DeepPath](https://github.com/xwhan/DeepPath)
-
-Deep Reinforcement Learning for Knowledge Graph Reasoning
+[DeepPath](https://github.com/xwhan/DeepPath): Deep Reinforcement Learning for Knowledge Graph Reasoning
 
 
-## [KBGAN](https://github.com/cai-lw/KBGAN)
-
- Adversarial Learning for Knowledge Graph Embeddings
+[KBGAN](https://github.com/cai-lw/KBGAN): Adversarial Learning for Knowledge Graph Embeddings
 
 
-## [AREL](https://github.com/littlekobe/AREL)
-
-No Metrics Are Perfect: Adversarial Reward Learning for Visual Storytelling
+[AREL](https://github.com/littlekobe/AREL) : No Metrics Are Perfect: Adversarial Reward Learning for Visual Storytelling
 
 
 * * * * 
