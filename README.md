@@ -1,6 +1,6 @@
 # paper
 
-Recent Trends in Deep Learning BasedNatural Language Processing: [English](https://arxiv.org/pdf/1708.02709.pdf), [Korea](https://ratsgo.github.io/natural%20language%20processing/2017/08/16/deepNLP/)
+## Recent Trends in Deep Learning BasedNatural Language Processing: [English](https://arxiv.org/pdf/1708.02709.pdf), [Korea](https://ratsgo.github.io/natural%20language%20processing/2017/08/16/deepNLP/)
 
 What is different from Machine learning on NLP to Deep Learning on NLP
 
@@ -25,4 +25,10 @@ What is different from Machine learning on NLP to Deep Learning on NLP
           
     * Character Embeddings
          
-        POS-tagging and NER, intraword morphological and shape information can also be very useful. 
+        For tasks such as POS-tagging and NER, intra-word morphological and shape information can also be very useful. A common phenomenon for languages with large vocabularies is the unknown word issue or out-of-vocabulary word(OOV)
+issue.
+
+2. Convolution Neural Networks
+
+A look-up table was used to transform each word into a vector of user-defined dimensions. Thus, an input sequence {s1, s2, ...sn} of n words was transformed into a series of vectors {ws1, ws2, ...wsn} by applying the look-up table to each of its words
+ 
