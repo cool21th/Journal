@@ -12,14 +12,17 @@ What is different from Machine learning on NLP to Deep Learning on NLP
     * Word embedding :  
         Measuring similarity between vectors is possible, using measures such as cosine similarity. 
         Word Embedding are often used as the first data processing layer in a deep learning model.
-    * Word2vec
+    * Word2vec(Apply the CBOW or Skip-gram)
         
         * Frameworks providing embedding tools and methods
         
-          [S-Space(Java)](https://github.com/fozziethebeat/S-Space)
-          [Semanticvectors(Java)](https://github.com/semanticvectors/)
-          [Gensim(Python)](https://radimrehurek.com/gensim/)
-          [Pydsm(Python)](https://github.com/jimmycallin/pydsm/)
-          [Dissect(Python)](http://clic.cimec.unitn.it/composes/toolkit/)
+          [S-Space(Java)](https://github.com/fozziethebeat/S-Space), 
+          [Semanticvectors(Java)](https://github.com/semanticvectors/), 
+          [Gensim(Python)](https://radimrehurek.com/gensim/), 
+          [Pydsm(Python)](https://github.com/jimmycallin/pydsm/), 
+          [Dissect(Python)](http://clic.cimec.unitn.it/composes/toolkit/), 
           [Fasttext(Python)](https://fasttext.cc/)
           
+    * Character Embeddings
+         
+        POS-tagging and NER, intraword morphological and shape information can also be very useful. 
