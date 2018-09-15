@@ -1,6 +1,6 @@
 # paper
 
-## Recent Trends in Deep Learning BasedNatural Language Processing: [English](https://arxiv.org/pdf/1708.02709.pdf), [Korea](https://ratsgo.github.io/natural%20language%20processing/2017/08/16/deepNLP/)
+## Recent Trends in Deep Learning BasedNatural Language Processing: [English](https://arxiv.org/pdf/1708.02709.pdf), [Korean](https://ratsgo.github.io/natural%20language%20processing/2017/08/16/deepNLP/)
 
 What is different from Machine learning on NLP to Deep Learning on NLP
 
@@ -30,8 +30,13 @@ issue.
 
 2. Convolution Neural Networks
 
+
    A look-up table was used to transform each word into a vector of user-defined dimensions. Thus, an input sequence {s1, s2, ...sn} of n words was transformed into a series of vectors {ws1, ws2, ...wsn} by applying the look-up table to each of its words
  
    * Basic CNN
+   
+       [for korea](http://docs.likejazz.com/cnn-text-classification-tf/), [source](https://github.com/likejazz/cnn-text-classification-tf), korea paper ([SNU : Large-Scale Text Classification Methodology
+with Convolutional Neural Network](https://bi.snu.ac.kr/Publications/Conferences/Domestic/KIISE2015W_JoHY.pdf))
+       
       
       * Sentence Modeling
