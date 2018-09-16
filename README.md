@@ -78,6 +78,25 @@ with Convolutional Neural Network](https://bi.snu.ac.kr/Publications/Conferences
        
        Overall, CNNs are extremely effective in mining semantic clues in contextual windows. However, they are very data heavy
 models. 
+
+
+3. Recurrent Neural Networks
+   
+   The term “recurrent” applies as they perform the same task over each instance of the sequence such that the output is dependent on the previous computations and results. Given that an RNN performs sequential processing by modeling units in sequence, it has the ability to capture the inherent sequential nature present in language, where units are characters, words or even sentences. RNNs are tailor-made for modeling such context dependencies in language and similar sequence modeling tasks, which resulted to be a strong motivation for researchers to use RNNs over CNNs in these areas. Another factor aiding RNN’s suitability for [sequence modeling tasks lies in its ability to model variable length of text,including very long sentences, paragraphs and even documents](http://aclweb.org/anthology/D15-1167)
+   
+   Recently, several works provided contrasting evidence on the superiority of CNNs over RNNs. Even in RNN-suited tasks like language modeling, [CNNs achieved competitive performance over RNNs](https://arxiv.org/pdf/1612.08083.pdf)
+   
+   [Yin et al.](https://arxiv.org/pdf/1702.01923.pdf) provided interesting insights on the comparative performance between RNNs and CNNs. After testing on multiple NLP tasks that included sentiment classification, QA, and POS tagging, they concluded that there is no clear winner
+   
+   * RNN Model
+   
+      * Simple RNN
+         
+         In the context of NLP, RNNs are primarily based on [Elman network](http://psych.colorado.edu/~kimlab/Elman1990.pdf)] and they are originally threelayer networks.
+         
+         
+         
+
       
       
       
