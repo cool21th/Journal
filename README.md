@@ -37,6 +37,7 @@ issue.
    
        [for korea](http://docs.likejazz.com/cnn-text-classification-tf/), [source](https://github.com/likejazz/cnn-text-classification-tf), korea paper ([SNU : Large-Scale Text Classification Methodology
 with Convolutional Neural Network](https://bi.snu.ac.kr/Publications/Conferences/Domestic/KIISE2015W_JoHY.pdf))
+       [Yoon Kim's site](http://www.people.fas.harvard.edu/~yoonkim/)
        
       
       * Sentence Modeling
@@ -55,8 +56,9 @@ with Convolutional Neural Network](https://bi.snu.ac.kr/Publications/Conferences
       This simple network, however, had many shortcomings with the CNN’s inability to model long distance dependencies standing as the main issue
       
       [Kalchbrenner et al. [44]](http://www.aclweb.org/anthology/P14-1062), who published a prominent paper where they proposed a dynamic convolutional neural network (DCNN) for semantic modeling of sentences.
+      [source example: Theano](https://github.com/FredericGodin/DynamicCNN), [Review of a paper](https://github.com/YBIGTA/DeepNLP-Study/wiki/Review-of-a-paper-:-A-Convolutional-Neural-Network-for-Modeling-Sentences)
       
-      Tasks involving sentiment analysis also require effective extraction of aspects along with their sentiment polarities. [Ruder et al.](http://www.aclweb.org/anthology/S16-1053) applied a CNN where in the input they concatenated an aspect vector with the word embeddings to get competitive results.
+      Tasks involving sentiment analysis also require effective extraction of aspects along with their sentiment polarities. [Ruder et al.](http://www.aclweb.org/anthology/S16-1053) applied a CNN where in the input they concatenated an aspect vector with the word embeddings to get competitive results. [source example](https://github.com/hurshprasad/ABSA)
       
       [Denil et al.](https://arxiv.org/pdf/1406.3830.pdf) applied DCNN to map meanings of words that constitute a sentence to that of documents for summarization.
       
