@@ -92,10 +92,36 @@ models.
    
       * Simple RNN
          
-         In the context of NLP, RNNs are primarily based on [Elman network](http://psych.colorado.edu/~kimlab/Elman1990.pdf)] and they are originally threelayer networks.
+         In the context of NLP, RNNs are primarily based on [Elman network](http://psych.colorado.edu/~kimlab/Elman1990.pdf) and they are originally threelayer networks.
          
+         In the figure, xt is taken as the input to the network at time step t and st represents the hidden state at the same time step. Calculation of st is based as per the equation: st = f(Uxt + Wst−1) 
          
+      * Long Short-Term Memory(LSTM)
+      
+         LSTM [1](http://www.bioinf.jku.at/publications/older/2604.pdf), [2](https://pdfs.semanticscholar.org/1154/0131eae85b2e11d53df7f1360eeb6476e7f4.pdf) has additional “forget” gates over the simple RNN. Its unique mechanism enables it to overcome both the vanishing and exploding gradient problem. Consisting of three gates: input, forget and output gates
          
+      * Gated Recuurent Units(GRU)
+      
+         Another gated RNN variant called [GRU](https://arxiv.org/pdf/1406.1078.pdf) of lesser complexity was invented with empirically similar performances to LSTM in most tasks. GRU comprises of two gates, reset gate and update gate, and handles the flow of information like an LSTM sans a memory unit
+
+
+   * Applications
+   
+      * RNN for word-level classification
+         
+         **bidirectional LSTM for NER([Lample et al](https://arxiv.org/pdf/1603.01360.pdf))**: The network captured arbitrarily long context information around the target word (curbing the limitation of a fixed window size) resulting in two fixed-size vector, on top of which another fully-connected layer was built. They used a CRF layer at last for the final entity tagging.
+         
+         **Generating Sequences With RNNs([Graves](https://arxiv.org/pdf/1308.0850.pdf))**: the effectiveness of RNNs in modeling complex sequences with long range context structure. also proposed deep RNNs where multiple layers of hidden states were used to enhance the modeling
+         
+         **prediction of a word on the words ahead using by replacing a feed-forward neural network with an RNN([Sundermeyer et al](https://www.lsv.uni-saarland.de/fileadmin/teaching/seminars/ASR-2015/DL-Seminar/From_Feedforward_to_Recurrent_LSTM_Neural_Networks_for_Language_Modeling.pdf)**: In their work, they proposed a typical hierarchy in neural network architectures where feed-forward neural networks gave considerable improvement over traditional count-based language models, which in turn were superseded by RNNs and later by LSTMs. 
+         
+      * RNN for sentence-level classification
+      
+         **predicting sentiment polarity ([Wang et al.](http://www.aclweb.org/anthology/P15-1130))**: This simple strategy proved competitive to the more complex DCNN structure
+         
+         **semantic matching between texts([Lowe et al](https://arxiv.org/pdf/1506.08909.pdf)**: o match a message with candidate responses with Dual-LSTM, which encodes both as fixed-size vectors and then measure their inner product as the basis to rank candidate responses
+         
+      * RNN for generating language: 
 
       
       
