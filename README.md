@@ -86,13 +86,33 @@ models.
    
 NLP tasks 
    
-   language modeling: [Recurrent neural network based language model](http://www.fit.vutbr.cz/research/groups/speech/publi/2010/mikolov_interspeech2010_IS100722.pdf), [Generating Text with Recurrent Neural Networks](http://www.cs.utoronto.ca/~ilya/pubs/2011/LANG-RNN.pdf)
+   **language modeling:** 
    
-   machine translation: [A Recursive Recurrent Neural Network for Statistical Machine Translation](http://www.aclweb.org/anthology/P14-1140.pdf), [Joint Language and Translation Modeling with Recurrent Neural Networks](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/EMNLP2013RNNMT.pdf), [Sequence to Sequence Learning with Neural Networks](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)
+   [Recurrent neural network based language model](http://www.fit.vutbr.cz/research/groups/speech/publi/2010/mikolov_interspeech2010_IS100722.pdf)
+   
+   [Generating Text with Recurrent Neural Networks](http://www.cs.utoronto.ca/~ilya/pubs/2011/LANG-RNN.pdf)
+   
+   **machine translation:**
+   
+   [A Recursive Recurrent Neural Network for Statistical Machine Translation](http://www.aclweb.org/anthology/P14-1140.pdf)
+   
+   [Joint Language and Translation Modeling with Recurrent Neural Networks](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/EMNLP2013RNNMT.pdf)
+   
+   [Sequence to Sequence Learning with Neural Networks](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)
          
-   speech recognition: [THE USE OF RECURRENT NEURAL NETWORKS IN CONTINUOUS SPEECH RECOGNITION](http://www.cstr.ed.ac.uk/downloads/publications/1996/rnn4csr96.pdf), [SPEECH RECOGNITION WITH DEEP RECURRENT NEURAL NETWORKS](https://arxiv.org/pdf/1303.5778.pdf), [Towards End-to-End Speech Recognition with Deep Convolutional Neural Networks](https://arxiv.org/pdf/1701.02720.pdf), [LONG SHORT-TERM MEMORY BASED RECURRENT NEURAL NETWORK ARCHITECTURES FOR LARGE VOCABULARY SPEECH RECOGNITION](https://arxiv.org/pdf/1402.1128.pdf)
+   **speech recognition:** 
    
-   image captioning: [Deep Visual-Semantic Alignments for Generating Image Descriptions](https://cs.stanford.edu/people/karpathy/cvpr2015.pdf)
+   [THE USE OF RECURRENT NEURAL NETWORKS IN CONTINUOUS SPEECH RECOGNITION](http://www.cstr.ed.ac.uk/downloads/publications/1996/rnn4csr96.pdf)
+   
+   [SPEECH RECOGNITION WITH DEEP RECURRENT NEURAL NETWORKS](https://arxiv.org/pdf/1303.5778.pdf) 
+   
+   [Towards End-to-End Speech Recognition with Deep Convolutional Neural Networks](https://arxiv.org/pdf/1701.02720.pdf)
+   
+   [LONG SHORT-TERM MEMORY BASED RECURRENT NEURAL NETWORK ARCHITECTURES FOR LARGE VOCABULARY SPEECH RECOGNITION](https://arxiv.org/pdf/1402.1128.pdf)
+   
+   **image captioning:** 
+   
+   [Deep Visual-Semantic Alignments for Generating Image Descriptions](https://cs.stanford.edu/people/karpathy/cvpr2015.pdf)
                
    
    Recently, several works provided contrasting evidence on the superiority of CNNs over RNNs. Even in RNN-suited tasks like language modeling, [CNNs achieved competitive performance over RNNs](https://arxiv.org/pdf/1612.08083.pdf)
