@@ -85,6 +85,7 @@ models.
    The term “recurrent” applies as they perform the same task over each instance of the sequence such that the output is dependent on the previous computations and results. Given that an RNN performs sequential processing by modeling units in sequence, it has the ability to capture the inherent sequential nature present in language, where units are characters, words or even sentences. RNNs are tailor-made for modeling such context dependencies in language and similar sequence modeling tasks, which resulted to be a strong motivation for researchers to use RNNs over CNNs in these areas. Another factor aiding RNN’s suitability for [sequence modeling tasks lies in its ability to model variable length of text,including very long sentences, paragraphs and even documents](http://aclweb.org/anthology/D15-1167)
    
 NLP tasks 
+   * * *
    
    **language modeling:** 
    
@@ -113,11 +114,13 @@ NLP tasks
    **image captioning:** 
    
    [Deep Visual-Semantic Alignments for Generating Image Descriptions](https://cs.stanford.edu/people/karpathy/cvpr2015.pdf)
-               
+   
+   * * * 
    
    Recently, several works provided contrasting evidence on the superiority of CNNs over RNNs. Even in RNN-suited tasks like language modeling, [CNNs achieved competitive performance over RNNs](https://arxiv.org/pdf/1612.08083.pdf)
    
    [Yin et al.](https://arxiv.org/pdf/1702.01923.pdf) provided interesting insights on the comparative performance between RNNs and CNNs. After testing on multiple NLP tasks that included sentiment classification, QA, and POS tagging, they concluded that there is no clear winner
+
    
    * RNN Model
    
@@ -150,11 +153,22 @@ NLP tasks
       
          **predicting sentiment polarity ([Wang et al.](http://www.aclweb.org/anthology/P15-1130))**: This simple strategy proved competitive to the more complex DCNN structure
          
-         **semantic matching between texts([Lowe et al](https://arxiv.org/pdf/1506.08909.pdf)**: o match a message with candidate responses with Dual-LSTM, which encodes both as fixed-size vectors and then measure their inner product as the basis to rank candidate responses
+         **semantic matching between texts([Lowe et al](https://arxiv.org/pdf/1506.08909.pdf))**: match a message with candidate responses with Dual-LSTM, which encodes both as fixed-size vectors and then measure their inner product as the basis to rank candidate responses
          
       * RNN for generating language: 
       
+         **a general deep LSTM encoder-decoder framework([Ilya Sutskever](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf))**: One LSTM is used to encode the “source” sequence as a fixed-size vector, which can be text in the original language (machine translation), the question to be answered (QA) or the message to be replied to (dialogue systems). During inference, the decoder generates tokens one by one, while updating its hidden state with the last generated token.
+
+         **A Neural Conversational Model([Oriol Vinyals](https://arxiv.org/pdf/1506.05869.pdf))**: When trained on more than 100 million message-response pairs, the LSTM decoder is able to generate very interesting responses in the open domain. It is also common to condition the LSTM decoder on additional signal to achieve certain effects
+
+         **A Persona-Based Neural Conversation Model([Jiwei Li](http://www.aclweb.org/anthology/P16-1094))**: proposed to condition the decoder on a constant persona vector that captures the personal information of an individual speaker
          
+         **A Neural-based Approach to Answering Questions about Images([Malinowski et al.](https://arxiv.org/pdf/1505.01121.pdf))**: first to provide an end-to-end deep learning solution where they predicted the answer as a set of words conditioned on the input image modeled by a CNN and text modeled by an LSTM
+         
+         **Dynamic Memory Networks for Natural Language Processing([Ankit Kumar](https://arxiv.org/pdf/1506.07285.pdf))**:  proposed dynamic memory network (DMN), four sub-modules. this idea was to repeatedly attend to the input text and image to form episodes of information improved at each iteration.
+         
+   * Attention Mechanism
+   
 
       
       
