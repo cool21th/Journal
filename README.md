@@ -192,9 +192,23 @@ NLP tasks
       **Aspect Level Sentiment Classification with Deep Memory Network([Tang et al.(2016)](https://arxiv.org/pdf/1605.08900.pdf))**:a solution based on a memory network (also known as [MemNet](https://arxiv.org/pdf/1410.3916.pdf)) employed multiple-hop attention. The multiple attention computation layer on the memory led to improved lookup for most informational regions in the memory and subsequently aided the classification.
    
 
-   * Recursive Neural Networks
+   4. Recursive Neural Networks
+      
+      Recursive neural networks represent a natural way to model sequences. Arguably, however, language exhibits a natural recursive structure, where words and sub-phrases combine into phrases in a hierarchical manner.
+      
+      **Max-Margin Markov Networks([Ben Taskar](https://papers.nips.cc/paper/2397-max-margin-markov-networks.pdf))**:  A scoring function is defined on the phrase representation to calculate the plausibility of that phrase. Beam search is usually applied for searching the best tree. The model is trained with the max-margin objective
    
-      * Basic Model
+      **Recursive Deep Models for Semantic Compositionality Over a Sentiment Treebank([Socher et al. (2013)](https://nlp.stanford.edu/~socherr/EMNLP2013_RNTN.pdf))**:classified semantic relationships such as cause-effect or topic-message between nominals in a sentence by building a single compositional semantics for the minimal constituent including both terms
+      
+      **Improved Semantic Representations From Tree-Structured LSTM Networks ([Tai et al.(2015)](http://www.aclweb.org/anthology/P15-1150))**: To avoid the gradient vanishing problem, LSTM units have also been applied to tree structures
+   
+   
+   5. Deep Reinforced Models and Deep Unsupervised Learning
+   
+      * Reinforcement learning for sequence generation
+      
+      
+         
       
       
       
