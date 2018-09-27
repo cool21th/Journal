@@ -169,8 +169,32 @@ NLP tasks
          
    * Attention Mechanism
    
-
+      Attention mechanism attempts to ease the existing encoder-decoder framework problem by allowing the decoder to refer back to the input sequence. Specifically during decoding, in addition to the last hidden state and generated token, the decoder is also conditioned on a “context” vector calculated based on the input hidden state sequence
       
+      **Attention mechanism to machine translation([Bahdanau et al.](https://arxiv.org/pdf/1409.0473.pdf))**: the attention signal over the input hidden state sequence is determined with a multi-layer perceptron by the last hidden state of the decoder.
+      
+      **Attention mechanism to summarization([Rush et al.](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.697.980&rep=rep1&type=pdf))**: each output word in the summary was conditioned on the input sentence through an attention mechanism. 
+      
+      *[Image captioning]*
+      
+      **Image captioning([Xu et al.](https://arxiv.org/pdf/1502.03044.pdf))**: Conditioned the LSTM decoder on different parts of the input image during each decoding step. Attention signal was determined by the previous hidden state and CNN features
+      
+      **Grammar as a Foreign Language([Vinyals et al.](https://arxiv.org/pdf/1412.7449.pdf))**: the syntactical parsing problem as a sequence-to-sequence learning task by linearizing the parsing tree.
+      
+      **Pointer Network([Vinyals et al.](https://arxiv.org/pdf/1506.03134.pdf))**: A further step in referring to the input sequence was to directly copy words or sub-sequences of the input onto the output sequence under a certain condition, which was useful in tasks such as dialogue generation and text summarization.
+      
+      **A Deep Reinforced Model for Abstractive Summarization ([Paulus et al.](https://arxiv.org/pdf/1705.04304.pdf))**:  Copying or generation was chosen at each time step during decoding
+      
+      *[sentiment analysis]
+      
+      **Attention-based LSTM for Aspect-level Sentiment Classification([Wang et al.(2016)](https://aclweb.org/anthology/D16-1058))**: The attention module focused on selective regions of the sentence which affected the aspect to be classified
+      
+      **Aspect Level Sentiment Classification with Deep Memory Network([Tang et al.(2016)](https://arxiv.org/pdf/1605.08900.pdf))**:a solution based on a memory network (also known as [MemNet](https://arxiv.org/pdf/1410.3916.pdf)) employed multiple-hop attention. The multiple attention computation layer on the memory led to improved lookup for most informational regions in the memory and subsequently aided the classification.
+   
+
+   * Recursive Neural Networks
+   
+      * Basic Model
       
       
       
