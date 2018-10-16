@@ -35,9 +35,12 @@
       
   2. Annotation using [GATE(General Architecture for Text Engineering)](https://gate.ac.uk/download/#latest)
 
-참고자료: [Training Conditional Random Field](https://www.lewuathe.com/machine%20learning/crf/conditional-random-field.html)
 
 * Building and Training a CRF Module in python
 
   pycrf module을 설치한다 *pip install python-crfsuite* or *conda install -c conda-forge python-crfsuite*
   
+
+
+
+참고자료: [Training Conditional Random Field](https://www.lewuathe.com/machine%20learning/crf/conditional-random-field.html)
