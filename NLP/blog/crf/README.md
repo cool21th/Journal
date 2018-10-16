@@ -20,5 +20,23 @@
       3. MaxEnt Markov Model(MEMM): 시퀀스 모델링 알고리즘(엔티티 주변 예측을 고려하지 않고 기능이 독립적이라고 가정하지 않습니다). 엔티티관계를 식별하는 가장 좋은 방법이 아닙니다. 
       4. Conditional Random Fileds(CRF): 시퀀스 모델링 알고리즘(Feature가 서로 의존한다고 가정할 뿐아니라 주변 예측또한 고려합니다: HMM과 MEMM의 장점 결합) 엔티티 인식을 하는 가장 좋은 방법으로 알려져 있습니다.
 
-* Formulating Conditinoal Random Fields(CRF)
+* CRF에 사용할 Training Data curating(수집/ 선별 및 새로운 가치 부여)
 
+  1. Annotating training Data: XML 형태로 Annotating 작업 
+  
+    Email received:
+      “Hi,
+      I am writing this email to claim my insurance amount. My id is abc123 and I claimed it on 1st January 2018. I did not receive any acknowledgement. Please help.
+      Thanks,
+      randomperson”
+
+    Annotated Email:
+      “<document>Hi, I am writing this email to claim my insurance amount. My id is <claim_number>abc123</claim_number> and I claimed on 1st January 2018. I did not receive any acknowledgement. Please help. Thanks, <claimant>randomperson</claimant></document>”
+      
+  2. Annotation using [GATE(General Architecture for Text Engineering)](https://gate.ac.uk/download/#latest)
+
+
+* Building and Training a CRF Module in python
+
+  pycrf module을 설치한다 *pip install python-crfsuite* or *conda install -c conda-forge python-crfsuite*
+  
