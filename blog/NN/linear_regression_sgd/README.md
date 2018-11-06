@@ -12,4 +12,4 @@ Dataset : [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datase
 3. Wine Quality Predictions
 
 
-*linear_regression_gradient.py*
+*linear_regression_sgd.py*
