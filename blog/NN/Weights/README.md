@@ -23,7 +23,9 @@ Neural Network에서 가중치는 small random number로 되어야 한다. Stoch
      
     
 3. Random initialization in Neural Networks
-
+    
+    최적의 가중치를 찾기위해 randomness 이용한 알고리즘은 input data 와 output 데이터에 종속적으로
+    특정 데이터에서는 learning이 진행할 때마다 다른 형태의 모델을 가진 네트웤을 가지게 됩니다.
 
 
 4. Initialization Methods
