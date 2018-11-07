@@ -84,4 +84,13 @@ Stochastic gradient descent는 deep learning 모델을 트레이닝 하는데 �
     Mini-batch size는 computational architecture측면에 맞춰 조정이 되며 
     GPU, CPU 의 하드웨어 메모리 요구사항에 맞춥니다. (32, 52, 128, 256 , 2^n 등)
     
+    작은 배치 값은 Training 과정에서 빠르게 수렴하는 결과를 가져옵니다. 
+    큰 배치 값은 error gradient의 정확한 추정과 함께 느리게 수렴하는 결과를 가져옵니다.
     
+    * Tip 1: A good default for batch size might be 32
+    
+        근거 논문 : [Practical recommendations for gradient-based training of deep architectures](https://arxiv.org/abs/1206.5533) , [Revisiting Small Batch Training for Deep Neural Networks](https://arxiv.org/abs/1804.07612)
+
+    * Tip 2: It is a good idea to review learning curves of model validation error against training time with different batch sizes when tunung the batch size
+    
+    * Tip 3: Tune batch size and learning rate after tuning all other hyperparameters
