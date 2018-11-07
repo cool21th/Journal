@@ -63,5 +63,25 @@ Stochastic gradient descent는 deep learning 모델을 트레이닝 하는데 �
     
     * Mini-Batch Gradient Descent
     
-        Mini-Batch Gradient Descent 는 gradient descent의 변형된 
+        Mini-Batch Gradient Descent 는 gradient descent의 변형된 형태로 training set를 분할해서 
+        모델 error를 계산하고 coefficients를 업데이트 하는 방법입니다.
+        
+        Mini-batch를 통해 gradient를 합산하거나, 분산값을 감소시키는 값의 평균으로 선택할 수 있습니다.
+        
+        * 장점
+        
+              Gradient descent보다 모델의 업데이트 주기가 빨라서 일부 최소점을 피할 수 있습니다. 
+              SGD보다 효율적인 프로세스로 계산을 합니다. 
+              메모리에 모든 데이터를 올리지 않아도 되고, 알고리즘 구현하는 수행을 하지 않아도 됩니다. 
+
+        * 단점
+            
+              Mini-batch 사이즈를 추가한 hyperparameter 구성이 요구됩니다
+              Training Example의 오류에 대한 정보를 mini-batch 전체에 누적시켜야 합니다(Batch Gradient와 동일)
+              
+3. How to Cinfigure Mini-batch Gradient Descent
+
+    Mini-batch size는 computational architecture측면에 맞춰 조정이 되며 
+    GPU, CPU 의 하드웨어 메모리 요구사항에 맞춥니다. (32, 52, 128, 256 , 2^n 등)
+    
     
