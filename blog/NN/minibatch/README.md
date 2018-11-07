@@ -20,3 +20,20 @@ Stochastic gradient descent는 deep learning 모델을 트레이닝 하는데 �
           error = calculate_error(y, predictions)
           model = update_model(model, error)
           
+
+2. Contrasting the 3 Types of Gradient Descent
+
+    * Stochastic Gradient Descent
+    
+        SGD라고 불리기도 하는 gradient descent algorithm으로 dataset으로 
+        트레이닝을 하는 동안 발생하는 에러를 계산하여 모델을 업데이트 하는 방법이다
+        
+        * 장점
+            즉각적인 업데이트로 모델의 성능 개선 속도 등에 대한 insight를 바로 볼수 있다.
+            초보자들이 구현하고 이해하기 쉬운 방법이다
+        
+    * Batch Gradient Descent
+    
+    * Mini-Batch Gradient Descent
+    
+    
