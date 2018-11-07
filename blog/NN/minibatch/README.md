@@ -29,11 +29,39 @@ Stochastic gradient descent는 deep learning 모델을 트레이닝 하는데 �
         트레이닝을 하는 동안 발생하는 에러를 계산하여 모델을 업데이트 하는 방법이다
         
         * 장점
-            즉각적인 업데이트로 모델의 성능 개선 속도 등에 대한 insight를 바로 볼수 있다.
-            초보자들이 구현하고 이해하기 쉬운 방법이다
+            
+              즉각적인 업데이트로 모델의 성능 개선 속도 등에 대한 insight를 바로 볼수 있다.
+              초보자들이 구현하고 이해하기 쉬운 방법이다
+              일부 문제들에 대해 빠르게 학습하여 결과를 낼 수 있다
+              일부분의 최소점을 피할 수 있다
+        
+        * 단점
+        
+              모델을 자주 업데이트 하거나 대규모 데이터셋에서 학습하면 시간이 오래 걸린다
+              빈번한 업데이트는 노이즈를 가져오고 그 결과 training epochs을 넘어선 분산값을 가짐으로 모델 에러를 유발할 수 있다
+              Noise signal learning 인해 모델의 최소 오류값을 가져오는데 어려움이 생긴다
+                
         
     * Batch Gradient Descent
     
+        SGD는 Training 예제 마다 모델을 변경하지만, 
+        Batch Gradient Descent는 모든 학습이 평가되고 나서 모델을 없데이트 합니다.
+        
+        * 장점
+            
+              모델의 update 횟수가 적어지면서 SGD보다 gradient descent 변화를 계산하는데 효율적입니다. 
+              Update빈도가 감소하면서 error gradient가 안정적으로 유지되며 결과적으로 수렴하는 결과를 가져옵니다
+              모델 에러 예측 계산과 모델의 업데이트를 분리함으로써 병렬처리할 수 있는 기반을 마련해 줍니다. 
+              
+        * 단점
+            
+              안정적인 error gradient로 인해 최적이 아닌 parameter값에 수렴할 수 있다
+              모든 training set에서 error를 예측을 누적하는 complexity를 추가해야 합니다
+              일반적으로 메모리에 전체 training set이 필요하며 동시에 algorithm을 사용할 수 있어야 합니다.
+              대규모 dataset의 경우 모델의 업데이트와 training 속도가 느려질 수 있습니다
+              
+    
     * Mini-Batch Gradient Descent
     
+        Mini-Batch Gradient Descent 는 gradient descent의 변형된 
     
