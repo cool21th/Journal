@@ -32,10 +32,34 @@ Neural Network에서 가중치는 small random number로 되어야 한다. Stoch
     
     여러번 수행함으로써 최적의 configuration값을 찾을 수 있게 된다
     
+    일반적으로 training 할 때 동일한 Random number를 사용하지 않는다. 왜냐하면 network의 weight값의 변경이 어려울 수 있기 때문이다
     
-
+    동일한 random number가 필요한 경우는 운영환경에서 모델을 사용하여 동일한 weight값을 찾을 때 유용하다.
 
 
 4. Initialization Methods
 
+    Keras에서 사용가능한 weights를 random number로 초기화하는 리스트는 다음과 같다
+    
+        Zeros: 생성되는 tensor들을 0으로 초기화
+        Ones: 생성되는 tensor들을 1로 초기화
+        Constant: 생성되는 tensor들을 상수로 초기화
+        RandomNormal: 생성되는 tensor들을 정규분포로 초기화
+        RandomUniform : 생성되는 tensor들을 균등분포로 초기화
+        TruncatedNormal : 생성되는 tensor들을 Truncated normal distribution으로 초기화
+        VarianceScaling : weight에 scaling을 적용 (keras.initializers.VarianceScaling(scale=1.0, mode='fan_in', distribution='normal', seed=None)
+        Orthogonal : random orthogonal matrix를 생성 (keras.initializers.Orthogonal(gain=1.0, seed=None))
+        Identity: 2D matrices 에서만 사용가능하며 identity matrix를 생성
+        lecun_uniform : LeCun Uniform initializer
+        glorot_normal : Xavier normal initializer
+        glorot_uniform : Xavier uniform initializer
+        he_normal : He normal initializer
+        lecun_normal : LeCun normal initializer
+        he_uniform: He uniform variance scaling initializer
+        
+  일반적으로 사용하는 초기화방법은 다음과 같습니다
+  
+  * Dense(e.g. MLP): glorot_uniform
+  * LSTM : glorot_uniform
+  * CNN : glorot_uniform
 
