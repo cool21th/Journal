@@ -26,6 +26,22 @@ Encoder 파트는 data visualization 또는 feature vector 로 표현되는 seqe
    * Sequence model 예측 자체가 sequence 이기 때문입니다 (seq2seq)
    
 
+3. Encoder-Decoder LSTM Models
+
+   LSTM은 입력 sequence의 시간 순서내에서의 복잡한 역학을 학습할 수 있을 뿐 아니라, 
+   긴 입력 sequence에서 정보를 기억하거나 사용하기 위해 내부 메모리를 사용할 수 있습니다.
+   
+   LSTM 네트워크는 가변길이 입력 seqeunce를 지원하고, 
+   가변길이 출력 sequence를 예측 또는 출력하는 모델을 사용할 수 있는 Encoder-Decoder LSTM 아키텍처로 구성될 수 있습니다
+   
+   이러한 아키텍쳐는 Speech recognition, text translation과 같은 시퀀스 예측문제에서 사용했습니다.
+   
+   
+4. What is an LSTM Autoencoder
+
+   Encoder-Decoder LSTM 아키텍처를 사용하여 sequence data용 autoencoder를 구현한 것입니다. 
+   
+   
 
    
    
