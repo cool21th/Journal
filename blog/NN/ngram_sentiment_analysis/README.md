@@ -11,10 +11,21 @@
     1. Separation of data into training and test sets
     2. Loading and cleaning the data to remove punctuation and numbers
     3. Prepare all reviews and save to file
-   
+    
+    *part1_data_preparation.py* 
+    
 2. Develop Multichannel Model
 
     1. Encode Data
     2. Define Model
     3. Complete Example
+    
+    *part2_develop_multichannel.py*
+    
+3. Evaluate Model
+
+    *part3_evaluate_model.py*
+    
+
+4. 
     
