@@ -52,7 +52,7 @@ trainy = [0 for _ in range(900)] + [1 for _ in range(900)]
 save_dataset([trainX, trainy], 'train.pkl')
 
 negative_docs = process_docs('review_polarity/txt_sentoken/neg', False)
-negative_docs = process_docs('review_polarity/txt_sentoken/neg', False)
+positive_docs = process_docs('review_polarity/txt_sentoken/pos', False)
 testX = negative_docs + positive_docs
 testy = [0 for _ in range(100)] + [1 for _ in range(100)]
 save_dataset([testX, testy], 'test.pkl')
