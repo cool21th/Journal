@@ -35,4 +35,17 @@ Matrix Factorization(행렬 분해)는 복잡한 행렬 연산을 쉽게 계산�
         R: 크기가 m X n 인 삼각 행렬
         
 
-  
+4. Cholesky Decomposition
+
+    Cholesky Decomposition은 모든 값이 0보다 큰 정사각행렬에 대한 것이다.
+    
+    A = L.L^T
+
+    A = U^T.U
+    
+        L: lower triangle matrix
+        U: Upper triangle matrix
+        
+    Cholesky decomposition은 선형회귀에 대한 최소제곱근 및 시뮬레이션/ 최적화 방법에 사용한다               
+    
+    
