@@ -17,7 +17,7 @@ Natural Language Understanding은 텍스트 함의(한문장의 의미가 논리
     첫 번째는 변환에 사용할 learning text representation 최적화 목표가 불명확하다는 것입니다.  
     Language Modeling, Machine Translation, Discourse coherence 와 같은 다양한 방법들을 최근에 조사한 결과로 
     각각 다른 목표 테스크에서 뛰어난 성과를 달성했습니다.
-    두 번째는 가장 효과적인 방법에 대한 합의가 없다는 것입니다. 기존 모델 [43](https://arxiv.org/pdf/1705.00108.pdf) [44](https://arxiv.org/pdf/1802.05365.pdf)은 작업별 변경, 복잡ㅂ한 학습계획, 보조적인 학습목표 추가 등을 조합합니다 
+    두 번째는 가장 효과적인 방법에 대한 합의가 없다는 것입니다. 기존 모델 [43](https://arxiv.org/pdf/1705.00108.pdf) [44](https://arxiv.org/pdf/1802.05365.pdf)은 작업별 변경, 복잡한 학습계획, 보조적인 학습목표 추가 등을 조합합니다 
     띠라서 semi-supervised Learning에 효과적인 개발을 진행하는데 어려움이 따릅니다. 
 
     
