@@ -20,6 +20,30 @@ Natural Language Understanding은 텍스트 함의(한문장의 의미가 논리
     두 번째는 가장 효과적인 방법에 대한 합의가 없다는 것입니다. 기존 모델 [43](https://arxiv.org/pdf/1705.00108.pdf) [44](https://arxiv.org/pdf/1802.05365.pdf)은 작업별 변경, 복잡한 학습계획, 보조적인 학습목표 추가 등을 조합합니다 
     띠라서 semi-supervised Learning에 효과적인 개발을 진행하는데 어려움이 따릅니다. 
 
+2. Related Work
+
+    Semi-supervised learnig for NLP
+    
+    Unsupervised pre-training
+    
+    Auxiliary training objectives
+    
+
+3. Framework
+
+    첫 번째 단계는 대규모 텍스트데이터에서 대용량 언어 모델 학습
+        
+        L1(U) = ilog P(ui|ui−k, . . . , ui−1; Θ)
+    
+        h0 = UWe + Wp
+        hl = transformer_block(hl−1)∀i ∈ [1, n]
+        P(u) = softmax(hnWTe)
+
+    where U = (u−k, . . . , u−1) is the context vector of tokens, n is the number of layers,
+    We is the token embedding matrix, and Wp is the position embedding matrix.
+    
+    두 번째 단계는 모델을 labeled 데이터로 분류하는 fine-tuning
+    
     
 
 
