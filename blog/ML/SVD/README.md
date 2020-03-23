@@ -1,9 +1,14 @@
 [A Gentle Introduction to Singular-Value Decomposition for Machine Learning](https://machinelearningmastery.com/singular-value-decomposition-for-machine-learning/)
 
 SVD(Singular-value Decomposition)은 가장 널리 사용되는 Matrix decomposition방법입니다
+Eigendecomposition에 비해 안정적인 결과를 가져오기에 
 압축, 노이즈제거 및 데이터 축소 등 다양한 응용 프로그램에서 자주 사용됩니다.
 
-1. Singular-value Decomposition
+
+### Singular-value Decomposition
+
+SVD는 행렬을 분해하여 이어지는 행렬 계산을 간단하게 해주는 matrix decomposition 방법입니다
+실수로 이루어진 값을 기준으로 수행합니다.(복소수 무시) 
 
     A = U.Sigma.V^T
     
@@ -12,8 +17,13 @@ SVD(Singular-value Decomposition)은 가장 널리 사용되는 Matrix decomposi
         Sigma: m X n 대각선 행렬
         V^T: n X n 전치행렬 (A 오른쪽 특이 벡터)
 
+Sigma 행렬의 대각선 값은 원 행렬(A)의 특이값(Singular-value)으로 알려져 있습니다.
+행렬 U의 Column은 원 행렬(A)의 왼쪽 특이행렬(left-singular vector)이고, 
+행렬 V의 Column은 원 행렬(A)의 오른쪽 특이행렬(right-singular vector) 입니다.
 
-2. Calculate Singular-Value Decomposition
+### Calculate Singular-Value Decomposition
+
+
 
     Scipy의 svd function을 이용하여 쉽게 구할 수 있다
     
