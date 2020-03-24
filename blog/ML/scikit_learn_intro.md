@@ -67,6 +67,62 @@ print(metrics.classification_report(expected, predicted))
 print(metrics.confusion_matrix(expected, predicted))
 ```
 
+### Example:[Data Rescaling](https://machinelearningmastery.com/rescaling-data-for-machine-learning-in-python-with-scikit-learn/)
+
+데이터 속성에서 달러, 킬로그램 및 판매량과 같은 다양한 수량에 대한 비율이 혼합된 속성이 포함될 수 있습니다. 
+기준이 서로 다르기 때문에 이러한 경우 데이터를 2가지 방법을 주로 사용합니다. Normalization과 Standardization 입니다. 
+
+
+##### Data Normalization
+
+Normalization은 numeric 속성인 데이터를 0과 1범위안으로 rescaling 하는 방법입니다. 
+
+kNN 과 같이 distance에 의존하는 모델에 적합한 방법입니다. 
+
+```python
+
+# Normalize the data attributes for the Iris dataset.
+from sklearn.datasets import load_iris
+from sklearn import preprocessing
+# load the iris dataset
+iris = load_iris()
+print(iris.data.shape)
+# separate the data from the target attributes
+X = iris.data
+y = iris.target
+# normalize the data attributes
+normalized_X = preprocessing.normalize(X)
+
+```
+
+##### Data Standardization
+
+Standardization은 평균이 0이고 표준 편차가 1이 되도록 각 속성의 의 분포를 이동시키는 방법입니다. 
+
+Gaussian 을 활용한 모델링에 적합한 방법입니다. 
+
+```python
+
+# Standardize the data attributes for the Iris dataset.
+from sklearn.datasets import load_iris
+from sklearn import preprocessing
+# load the Iris dataset
+iris = load_iris()
+print(iris.data.shape)
+# separate the data and target attributes
+X = iris.data
+y = iris.target
+# standardize the data attributes
+standardized_X = preprocessing.scale(X)
+
+```
+
+
+
+
+
+
+
 참고자료: \
 [scikit-learn homepage](https://scikit-learn.org/)\
 [scikit-learn github page](https://github.com/scikit-learn)
