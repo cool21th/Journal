@@ -21,6 +21,14 @@ SciPy framework에서 데이터 핸들링에서 빠진 부분을 보충해줍니
 Pandas는 데이터를 Python을 활용하여 메모리에 로드한 후 작업이 진행됩니다. 
 관계형 Database 나 spreadsheet 와 같은 테이블 형태의 데이터 작업을 할 수 있습니다. 
 
+##### Scipy
+
+SciPy는 수학과 과학에 최적화된 Python Library 입니다. SciPy를 구성하는 ecosystem은 다음과 같습니다. 
+
+- NumPy: A foundation for SciPy that allows to efficiently work with data in arrays
+- Matplotlib: Allows you to create 2D charts and plots from data
+- pandas: tools and data structures to organize and analyze your data
+
 
 ### Pandas Features
 
