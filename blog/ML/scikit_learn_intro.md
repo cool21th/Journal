@@ -5,6 +5,7 @@
 머신러닝을 떠나서, python 코딩을 하는 사람들중 Scikit-learn이라는 Library를 못본 사람은 없었을 것입니다.
 
 Scikit-learn은 머신러닝 개발에서 부터 운영까지 충족시켜주는 아주 강력한 라이브러리입니다.
+Scikit-learn의 소개와 기본적인 기능에 대해 소개하고자 합니다.
 
 
 ### Scikit-learn 소개
@@ -118,9 +119,129 @@ standardized_X = preprocessing.scale(X)
 ```
 
 
+### Feature Selection
+
+Feature selection은 예측 변수 또는 도출하고 싶은 결과에 기여하는 feature들을 선택하는 방법입니다. 
+
+데이터 분석 or 모델링을 하는데 있어서 관련없는 feature가 많으면 성능은 당연히 떨어집니다. 
+Feature selection을 통해 얻는 이점은 다음과 같이 3가지 입니다. 
+
+- Reduces Overfitting: 불필요한 데이터를 줄여 노이즈를 줄입니다. 
+- Improve Accuracy: 잘못된 데이터를 줄여 모델의 정확도를 높입니다. 
+- Reduce Training: 필요한 데이터만을 가지고 모델을 빠르게 훈련시킵니다. 
+
+이를 위해 Scikit-learn에서 Recursive Feature Elimination 과 Feature importance ranking 기능을 제공해줍니다. 
 
 
+##### Recursive Feature Elimination
 
+Recursive Feature Elimination 은 모델의 속성을 재귀적으로 제거하고, 모델링함으로써 정확도가 가장 높은 속성 조합을 찾아냅니다. 
+
+```python
+
+# Recursive Feature Elimination
+from sklearn import datasets
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+# load the iris datasets
+dataset = datasets.load_iris()
+# create a base classifier used to evaluate a subset of attributes
+model = LogisticRegression()
+# create the RFE model and select 3 attributes
+rfe = RFE(model, 3)
+rfe = rfe.fit(dataset.data, dataset.target)
+# summarize the selection of the attributes
+print(rfe.support_)
+print(rfe.ranking_)
+
+
+```
+
+
+##### Feature Importance
+
+Feature Importance는 decision tree 기반의 앙상블모델(Random Forest or extra trees)들의 상대적인 중요 속성을 찾는데 사용합니다. 
+
+```python
+
+# Feature Importance
+from sklearn import datasets
+from sklearn import metrics
+from sklearn.ensemble import ExtraTreesClassifier
+# load the iris datasets
+dataset = datasets.load_iris()
+# fit an Extra Trees model to the data
+model = ExtraTreesClassifier()
+model.fit(dataset.data, dataset.target)
+# display the relative importance of each attribute
+print(model.feature_importances_)
+
+```
+
+회귀모델에는 보통 Recursive Feature Elimination 방법을, tree기반 앙상블 모델에는 feature importace 방법을 사용합니다. 
+
+
+### [Algorithm Parameter tuning](https://machinelearningmastery.com/how-to-tune-algorithm-parameters-with-scikit-learn/)
+
+
+머신러닝 알고리즘에서 parameter tuning은 모델링의 마지막 단계에서 수행됩니다. 
+이러한 과정을 Hyperparameter optimization이라고 합니다.(딥러닝의 하이퍼파라미터와는 다릅니다)
+
+Scikit-learn에서는 hyper parameter 튜닝전략을 grid search와 random search 두가지 제시합니다. 
+
+##### Grid Search Parameter Tuning
+
+Grid Search는 알고리즘 파라미터 조합을 grid 형식으로 모델에 적용해 평가하는 방법입니다. 
+
+```python
+
+# Grid Search for Algorithm Tuning
+import numpy as np
+from sklearn import datasets
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+# load the diabetes datasets
+dataset = datasets.load_diabetes()
+# prepare a range of alpha values to test
+alphas = np.array([1,0.1,0.01,0.001,0.0001,0])
+# create and fit a ridge regression model, testing each alpha
+model = Ridge()
+grid = GridSearchCV(estimator=model, param_grid=dict(alpha=alphas))
+grid.fit(dataset.data, dataset.target)
+print(grid)
+# summarize the results of the grid search
+print(grid.best_score_)
+print(grid.best_estimator_.alpha)
+
+```
+
+
+##### Random Search Parameter Tuning
+
+Random search는 Random distribution으로 부터 알고리즘의 parameter들을 샘플링해서 튜닝하는 방법입니다. 
+
+```python
+
+# Randomized Search for Algorithm Tuning
+import numpy as np
+from scipy.stats import uniform as sp_rand
+from sklearn import datasets
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import RandomizedSearchCV
+# load the diabetes datasets
+dataset = datasets.load_diabetes()
+# prepare a uniform distribution to sample for the alpha parameter
+param_grid = {'alpha': sp_rand()}
+# create and fit a ridge regression model, testing random alpha values
+model = Ridge()
+rsearch = RandomizedSearchCV(estimator=model, param_distributions=param_grid, n_iter=100)
+rsearch.fit(dataset.data, dataset.target)
+print(rsearch)
+# summarize the results of the random parameter search
+print(rsearch.best_score_)
+print(rsearch.best_estimator_.alpha)
+
+```
 
 
 참고자료: \
