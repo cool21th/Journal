@@ -45,6 +45,77 @@ Financial domain에 적합한 시계열데이터, 일반적인 그리드 데이�
 - Summary Statistics: Fast and powerful summary statistics of data
 - Visualization: histogram, box plots,scatter matrix 등 데이터 구조 기반 시각화 
 
+
+### [Data Loading (python, numpy, pandas)](https://machinelearningmastery.com/load-machine-learning-data-python/)
+
+기본적으로 Python에서 loading 할 data format은 csv 파일을 주로 씁니다. 
+csv에 대해 고려할 것은 다음과 같습니다. 
+
+- CSV File Header : 보통 1번째 row를 column 명으로 인식한다. (원하지 않은 경우 header =None)
+- Comments: hash('#')로 시작하는 문장을 주석여부에 대해 정의해야 합니다.
+- Delimiter: field 단위를 나누는 기준입니다. 보통 ','를 쓰지만 다른 delimiter인 경우 따로 고려 해야 합니다. 
+- Quotes: 기본 인용부호는 큰따옴표인 "\"" 입니다. 다른 문자를 사용할 경우 지정해줘야 합니다.
+
+
+##### Load csv with Python Standard Library
+
+```python
+# Load CSV (using python)
+import csv
+import numpy
+filename = 'pima-indians-diabetes.data.csv'
+raw_data = open(filename, 'rt')
+reader = csv.reader(raw_data, delimiter=',', quoting=csv.QUOTE_NONE)
+x = list(reader)
+data = numpy.array(x).astype('float')
+print(data.shape)
+```
+
+##### Load CSV file with NumPy
+
+```python
+
+# 1. Load CSV
+import numpy
+filename = 'pima-indians-diabetes.data.csv'
+raw_data = open(filename, 'rt')
+data = numpy.loadtxt(raw_data, delimiter=",")
+print(data.shape)
+
+
+# 2. Load CSV from URL using NumPy
+from numpy import loadtxt
+from urllib.request import urlopen
+url = 'https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv'
+raw_data = urlopen(url)
+dataset = loadtxt(raw_data, delimiter=",")
+print(dataset.shape)
+
+```
+
+
+##### Load CSV file with Pandas
+
+```python
+
+# Load CSV using Pandas
+import pandas
+filename = 'pima-indians-diabetes.data.csv'
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+data = pandas.read_csv(filename, names=names)
+print(data.shape)
+
+# Load CSV using Pandas from URL
+import pandas
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+data = pandas.read_csv(url, names=names)
+print(data.shape)
+
+```
+
+
+
 참고자료:\
 [pandas homepage](https://pandas.pydata.org/)
 
