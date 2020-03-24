@@ -119,7 +119,7 @@ standardized_X = preprocessing.scale(X)
 ```
 
 
-### Feature Selection
+### [Feature Selection](https://machinelearningmastery.com/feature-selection-machine-learning-python/)
 
 Feature selection은 예측 변수 또는 도출하고 싶은 결과에 기여하는 feature들을 선택하는 방법입니다. 
 
@@ -130,7 +130,8 @@ Feature selection을 통해 얻는 이점은 다음과 같이 3가지 입니다.
 - Improve Accuracy: 잘못된 데이터를 줄여 모델의 정확도를 높입니다. 
 - Reduce Training: 필요한 데이터만을 가지고 모델을 빠르게 훈련시킵니다. 
 
-이를 위해 Scikit-learn에서 Recursive Feature Elimination 과 Feature importance ranking 기능을 제공해줍니다. 
+이를 위해 Scikit-learn에서 가장 기본적인 방법은 Recursive Feature Elimination 과 Feature importance ranking 이 있고,
+선형대수를 적용한 Principal Component Analysis, 변수 하나에 대한 통계학적인 접근(Univariate Selection) 등이 있습니다
 
 
 ##### Recursive Feature Elimination
@@ -178,7 +179,77 @@ print(model.feature_importances_)
 
 ```
 
+##### Principal Component Analysis
+
+PCA는 선형대수를 사용하여 데이터들을 압축한 형태로 변환합니다.
+
+일반적으로 Data reduction 기술이라고 말하고, PCA 결과로 차원의 수 또는 구성 요소들을 선택할 수 있습니다. 
+
+```python
+
+
+# Feature Extraction with PCA
+import numpy
+from pandas import read_csv
+from sklearn.decomposition import PCA
+# load data
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+# feature extraction
+pca = PCA(n_components=3)
+fit = pca.fit(X)
+# summarize components
+print("Explained Variance: %s" % fit.explained_variance_ratio_)
+print(fit.components_)
+
+```
+
+
+##### Univariate Selection
+
+Output 변수와 가장 밀접한 feature를 찾는 방법론입니다. 
+Scikit-learn에서는 SelectKBest 를 제공해 다양한 통계적 기법과 병행해서 사용할 수 있도록 도와줍니다. 
+
+이번 예시는 ANOVA F-value 를 통해 통계적인 테스트 스캔을 사용합니다. 
+
+
+```Python
+
+# Feature Selection with Univariate Statistical Tests
+from pandas import read_csv
+from numpy import set_printoptions
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_classif
+# load data
+filename = 'pima-indians-diabetes.data.csv'
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(filename, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+# feature extraction
+test = SelectKBest(score_func=f_classif, k=4)
+fit = test.fit(X, Y)
+# summarize scores
+set_printoptions(precision=3)
+print(fit.scores_)
+features = fit.transform(X)
+# summarize selected features
+print(features[0:5,:])
+
+```
+
+
+
+
 회귀모델에는 보통 Recursive Feature Elimination 방법을, tree기반 앙상블 모델에는 feature importace 방법을 사용합니다. 
+
+
+
 
 
 ### [Algorithm Parameter tuning](https://machinelearningmastery.com/how-to-tune-algorithm-parameters-with-scikit-learn/)
