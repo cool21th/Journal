@@ -1,0 +1,196 @@
+
+# Cross Entropy
+[A Gentle Introduction to Cross-Entropy for Machine Learning](https://machinelearningmastery.com/cross-entropy-for-machine-learning/)
+
+
+### Overview
+
+Cross-entropy는 머신러닝에서 가장 일반적인  loss function 입니다. 
+
+Cross-entropy는 정보이론(Information field) 분야에서 **두 확률 분포 사이의 차이를 계산하는 측정값**을 의미합니다.
+두 확률 분포간에 상대적인 entropy 값을 계산하는 것이 KL diivergence 와 유사하지만, Cross-entropy에서는 Totla entropy를 계산한다는 부분이 다른점입니다
+
+Cross-entropy는 Logistic loss(log loss)와 유사하면서도 다릅니다.
+classification에서의 loss function으로 사용될 때, 서로다른 대상 데이터에서 다른 측정값이 도출되더라도, 
+두 측정값은 같은 수량으로 계산하여, 서로 바꿔 사용할 수 있습니다.
+
+
+### Entropy 
+[A Gentle Introduction to Information Entropy](https://machinelearningmastery.com/what-is-information-entropy/)
+
+정보이론(Information Theory)은 노이즈가 많은 채널을 통해 데이터를 전송할때 사용하는 수학의 한 분야 입니다. 
+
+정해진 메세지가 보유하고 있는 정보를 수량으로 측정하기 위해 시작한 아이디어로, 
+Event 와 엔트로피(called random variable)를 정량화 하고, 확률로 계산이 가능합니다. 
+
+Information 과 Entropy를 계산하는 것은 머신러닝에 아주 유용합니다. 
+가장 기본적인 feature selection에서 부터, decision tree 모델링, classification 모델링 등에 사용합니다. 
+따라서, 머신러닝 전문가는 Information과 entropy에 대해 정학히 알아야 합니다.
+
+##### Information Theory
+
+정보이론(Information Theory)은 데이터 압축 및 신호 처리와 같이 통신 분야와 밀접한 관계를 가진 수학의 한 분야 입니다. 
+
+Information은 event, variables와 distribution(분포) 등에 대한 정보의 양을 정량화하는 것이 기본개념입니다. 
+
+정보의 양을 정량화는 확률을 가지고 사용해야 하기 때문에 서로간의 관계 정의가 필요하며,
+정보의 측정은 통신을 넘어서 AI, 머신러닝 분야까지 넓게 사용되고 있습니다. 
+
+
+##### Calculate the Information for an Event
+
+정보를 정량화 한다는 것은 낮은 확률의 이벤트는 높은 정보를, 높은 확률의 이벤트는 낮은 정보를 갖는다는 데서 시작합니다. 
+
+discrete event x는 다음과 같은 공식을 따릅니다. 
+
+information(x) = -log(p(x)) 
+
+log 는 밑이 2인 것을 의미하며, 그 선택기준은 정보 측정단위가 비트(이진수) 이기 때문입니다. 
+이것은 정보 처리 의미에서 이벤트를 나타내는 데 필요한 비트 수로 직접 해석이 가능합니다. 
+
+log 함수에서 -가 붙여진 것은 x의 범위가 0~ 1사이로 항상 그 값은 양수를 의미하는 것입니다. 
+
+
+example) 동전에 대한 정보 값
+
+```python
+
+# calculate the information for a coin flip
+from math import log2
+# probability of the event
+p = 0.5
+# calculate information for event
+h = -log2(p)
+# print the result
+print('p(x)=%.3f, information: %.3f bits' % (p, h))
+
+```
+
+example) 주사위에 대한 정보 값
+
+```python
+
+# calculate the information for a dice roll
+from math import log2
+# probability of the event
+p = 1.0 / 6.0
+# calculate information for event
+h = -log2(p)
+# print the result
+print('p(x)=%.3f, information: %.3f bits' % (p, h))
+
+```
+
+example) 확률과 정보 간의 관계
+
+
+```python
+
+
+# compare probability vs information entropy
+from math import log2
+from matplotlib import pyplot
+# list of probabilities
+probs = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+# calculate information
+info = [-log2(p) for p in probs]
+# plot probability vs information
+pyplot.plot(probs, info, marker='.')
+pyplot.title('Probability vs Information')
+pyplot.xlabel('Probability')
+pyplot.ylabel('Information')
+pyplot.show()
+
+```
+
+##### Calculate the Entropy for a Random Variable
+
+
+Entropy는 Random variable에 대한 확률 분포로 도출 된 이벤트를 나타내거나 전송하는데 필요한 비트수를 의미합니다. 
+
+
+H(x) = -sum(each k in K p(k)*log(p(k))
+
+각 이벤트의 발생 확률과 비트수를 곱한 값의 합의 - 값으로 표현됩니다. 
+
+example) original python
+
+```python
+
+# calculate the entropy for a dice roll
+from math import log2
+# the number of events
+n = 6
+# probability of one event
+p = 1.0 /n
+# calculate entropy
+entropy = -sum([p * log2(p) for _ in range(n)])
+# print the result
+print('entropy: %.3f bits' % entropy)
+
+```
+
+example) SciPy
+
+```python
+
+# calculate the entropy for a dice roll
+from scipy.stats import entropy
+# discrete probabilities
+p = [1/6, 1/6, 1/6, 1/6, 1/6, 1/6]
+# calculate entropy
+e = entropy(p, base=2)
+# print the result
+print('entropy: %.3f bits' % e)
+
+```
+
+example) entropy 와 probability 간 관계
+
+```python
+
+# compare probability distributions vs entropy
+from math import log2
+from matplotlib import pyplot
+ 
+# calculate entropy
+def entropy(events, ets=1e-15):
+	return -sum([p * log2(p + ets) for p in events])
+ 
+# define probabilities
+probs = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
+# create probability distribution
+dists = [[p, 1.0 - p] for p in probs]
+# calculate entropy for each distribution
+ents = [entropy(d) for d in dists]
+# plot probability distribution vs entropy
+pyplot.plot(probs, ents, marker='.')
+pyplot.title('Probability Distribution vs Entropy')
+pyplot.xticks(probs, [str(d) for d in dists])
+pyplot.xlabel('Probability Distribution')
+pyplot.ylabel('Entropy (bits)')
+pyplot.show()
+
+```
+
+
+
+
+
+### Cross-Entropy
+
+지금까지 Entropy에 대해 이야기 했고, 이제는 Cross-entropy에 대해 좀더 자세하게 이야기 해보겠습니다. 
+
+Information(정보) 이론에서는 event를 인코딩하고 전송하기위해 비트수로 그 양을 보여줍니다. 
+확률이 적은 이벤트는 보다 많은 정보(비트수)를 가지고 있고, 확률이 높은 이벤트는 적은 정보(비트수)를 가지고 있습니다.
+
+Entropy는 확률 분포에서 전송할 비트를 무작위로 뽑은 수를 말합니다. 
+비대칭 분포는 엔트로피가 낮지만, 정규분포를 따를 경우에는 엔트로피가 큽니다. 
+즉, 비대칭 분포에서 많은 정보수를 가진다는 것을 알 수 있습니다. 
+
+
+
+H(X) = -sum x in X P(X) * log(P(x))
+
+
+
