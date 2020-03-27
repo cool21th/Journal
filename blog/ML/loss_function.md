@@ -229,13 +229,157 @@ KL Divergence 에 대해 이야기 하기 전에 통계학적 거리(Statistical
 > Information 이론에서 주로 사용하는 Divergence score는 KL Divergence와 Jensen-Shannon Divergence 입니다. 
 
 
+2. Kullback-Leibler Divergence
+
+KL Divergence는 두 확률분포간에 서로 얼마나 다른지를 정량화 해서 점수를 매기는 방법입니다. 
+P와 Q 간의 Divergence는 KL(P || Q)로 표기를 합니다.
+
+KL(P || Q) = -sum x in X P(x) * log(Q(x)/P(x)) = sum x in X P(x) * log(P(x)/Q(x))
+
+KL divergence는 각 이벤트가 P에서 발생할 확률과 Q에 발생한 것을 P로 나눈후 log를 취한 값을 곱한 결과들의 합을 -로 취한 결과입니다. 
+log 안에 P(X)와 Q(x)를 분모분자를 바꾸어놓은 결과도 로그 특성상으로 동일합니다 
+
+x값이 P에서 크면서 Q에서 작거나, P가 작으면서 Q가 크면 발산을 가진다는 것을 의미합니다.
+전자의 경우는 매우 큰 발산을 의미하고, 후자는 전자보다 작지만 이또한 발산을 의미합니다.
+
+이를 통해, KL(P || Q) != KL(Q || P) 인 것을 알 수 있습니다. 
+
+구하고자 하는것은 P의 확률분포이고, Q는 P의 근사치 인 것을 알 수 있습니다. 
+
+KL divergence를 코드로 확인하도록 하겠습니다. 
+
+- 이벤트 별 확률 확인
+
+```python
+
+# plot of distributions
+from matplotlib import pyplot
+# define distributions
+events = ['red', 'green', 'blue']
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+print('P=%.3f Q=%.3f' % (sum(p), sum(q)))
+# plot first distribution
+pyplot.subplot(2,1,1)
+pyplot.bar(events, p)
+# plot second distribution
+pyplot.subplot(2,1,2)
+pyplot.bar(events, q)
+# show the plot
+pyplot.show()
+
+```
+
+- KL divergence 를 통한 결과값 확인(original Python)
+
+```python
+
+# example of calculating the kl divergence between two mass functions
+from math import log2
+ 
+# calculate the kl divergence
+def kl_divergence(p, q):
+	return sum(p[i] * log2(p[i]/q[i]) for i in range(len(p)))
+ 
+# define distributions
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+# calculate (P || Q)
+kl_pq = kl_divergence(p, q)
+print('KL(P || Q): %.3f bits' % kl_pq)
+# calculate (Q || P)
+kl_qp = kl_divergence(q, p)
+print('KL(Q || P): %.3f bits' % kl_qp)
+
+```
+
+- SciPy를 통한 KL divergence 확인
+
+SciPy에서 KL divergence를 relative entropy 함수로 계산할수 있습니다. 
+다른 점은 log 밑이 2가 아닌 자연로그로 계산합니다.
 
 
 
+```python
+
+# example of calculating the kl divergence (relative entropy) with scipy
+from scipy.special import rel_entr
+# define distributions
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+# calculate (P || Q)
+kl_pq = rel_entr(p, q)
+print('KL(P || Q): %.3f nats' % sum(kl_pq))
+# calculate (Q || P)
+kl_qp = rel_entr(q, p)
+print('KL(Q || P): %.3f nats' % sum(kl_qp))
+
+```
 
 
+3. Jensen-Shannon Divergence
+
+JS Divergence는 두 확률분포간에 유사도 또는 차이를 정량화하는 방법들 중 하나 입니다. 
+확률 분포 P와 Q사이에 동일한 값을 갖도록 하는 방법으로 KL Divergence를 사용합니다.  
+
+JS(P || Q) == JS(Q || P)
+
+JS(P || Q) = 1/2 * KL(P || M) + 1/2 * KL(Q || M)
+
+M = 1/2 * (P + Q)
 
 
+- Original Python
+
+```python
+
+
+# example of calculating the js divergence between two mass functions
+from math import log2
+from math import sqrt
+from numpy import asarray
+ 
+# calculate the kl divergence
+def kl_divergence(p, q):
+	return sum(p[i] * log2(p[i]/q[i]) for i in range(len(p)))
+ 
+# calculate the js divergence
+def js_divergence(p, q):
+	m = 0.5 * (p + q)
+	return 0.5 * kl_divergence(p, m) + 0.5 * kl_divergence(q, m)
+ 
+# define distributions
+p = asarray([0.10, 0.40, 0.50])
+q = asarray([0.80, 0.15, 0.05])
+# calculate JS(P || Q)
+js_pq = js_divergence(p, q)
+print('JS(P || Q) divergence: %.3f bits' % js_pq)
+print('JS(P || Q) distance: %.3f' % sqrt(js_pq))
+# calculate JS(Q || P)
+js_qp = js_divergence(q, p)
+print('JS(Q || P) divergence: %.3f bits' % js_qp)
+print('JS(Q || P) distance: %.3f' % sqrt(js_qp))
+
+```
+
+- SciPy 활용
+
+```python
+
+# calculate the jensen-shannon distance metric
+from scipy.spatial.distance import jensenshannon
+from numpy import asarray
+# define distributions
+p = asarray([0.10, 0.40, 0.50])
+q = asarray([0.80, 0.15, 0.05])
+# calculate JS(P || Q)
+js_pq = jensenshannon(p, q, base=2)
+print('JS(P || Q) Distance: %.3f' % js_pq)
+# calculate JS(Q || P)
+js_qp = jensenshannon(q, p, base=2)
+print('JS(Q || P) Distance: %.3f' % js_qp)
+
+```
 
 
 
