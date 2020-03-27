@@ -415,7 +415,7 @@ pyplot.show()
 ```
 
 
-- Calculate Cross-Entropy Between Distribution
+2. Calculate Cross-Entropy Between Distribution
 
 ```python
 
@@ -439,7 +439,7 @@ print('H(Q, P): %.3f bits' % ce_qp)
 ```
 
 
-- Calculate Cross-Entropy Between a Distribution and Itself
+3. Calculate Cross-Entropy Between a Distribution and Itself
 
 ```python
 
@@ -462,7 +462,7 @@ print('H(Q, Q): %.3f bits' % ce_qq)
 
 ```
 
-- Calculate Cross-Entropy Using KL Divergence
+4. Calculate Cross-Entropy Using KL Divergence
 
 ```python
 
@@ -500,4 +500,163 @@ print('H(P, Q): %.3f bits' % ce_pq)
 
 ### Cross-Entropy as a Loss Function
 
+Cross-Entropy는 classification 모델을 최적화 할때 주로 사용되는 loss function입니다. 
+Classification 모델은 입력된 변수가 레이블링 된 클래스의 위치를 예측합니다. 
+클래스간의 확률 분포 사이에 input 변수의 클래스를 예측하는 것입니다. 
 
+실제 값(Expected Probability)의 확률 값은 P, 모델 예측값(Predicted Probability)의 확률 값을 Q라고 한다면
+P와 Q의 Cross-entropy 를 활용해서 H(P, Q) = -sum x in X P(x) * log(Q(x)) 인 것을 구할 수 있습니다. 
+
+Binary Classification(label 값이 0과 1로 구성) 인 경우로 보면 H(P, Q) = -(P(class 0) * log(Q(class 0)) + p(class 1) * log(Q(class 1))) 로 표현되는 것을 확인 할 수 있습니다. Bernoulli 분포와 동일하다는 것을 확인 할 수 있습니다. 
+
+
+### Calculate Entropy for Class Labels
+
+```python
+
+# entropy of examples from a classification task with 3 classes
+from math import log2
+from numpy import asarray
+ 
+# calculate entropy
+def entropy(p):
+	return -sum([p[i] * log2(p[i]) for i in range(len(p))])
+ 
+# class 1
+p = asarray([1,0,0]) + 1e-15
+print(entropy(p))
+# class 2
+p = asarray([0,1,0]) + 1e-15
+print(entropy(p))
+# class 3
+p = asarray([0,0,1]) + 1e-15
+print(entropy(p))
+
+
+```
+
+앞서 이야기 한것처럼, P와 Q 간의 크로스 Entropy 는 P 의 엔트로피와 P Q 간의 KL Divergence 값과 동일합니다. 
+결국 KL Divergence 값 만으로도 loss function으로 사용이 가능하다는 것을 알 수 있습니다. 
+
+
+
+### Calculate Cross-Entropy Between Class Label and Probabilities
+
+classification 의 cross-entropy는 분류 형태에 따라 Binary Cross-entropy, categorical Cross-entropy 와같이 특정이름을 줍니다. 
+
+- Binary Cross-Entropy: Cross-entropy as a loss function for a binary classification task
+- Categorical Cross-Entropy: Cross-entropy as a loss function for a multi-class classification task.
+
+example)
+
+```python
+
+# calculate cross entropy for classification problem
+from math import log
+from numpy import mean
+ 
+# calculate cross entropy
+def cross_entropy(p, q):
+	return -sum([p[i]*log(q[i]) for i in range(len(p))])
+ 
+# define classification data
+p = [1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+q = [0.8, 0.9, 0.9, 0.6, 0.8, 0.1, 0.4, 0.2, 0.1, 0.3]
+# calculate cross entropy for each example
+results = list()
+for i in range(len(p)):
+	# create the distribution for each event {0, 1}
+	expected = [1.0 - p[i], p[i]]
+	predicted = [1.0 - q[i], q[i]]
+	# calculate cross entropy for the two events
+	ce = cross_entropy(expected, predicted)
+	print('>[y=%.1f, yhat=%.1f] ce: %.3f nats' % (p[i], q[i], ce))
+	results.append(ce)
+ 
+# calculate the average cross entropy
+mean_ce = mean(results)
+print('Average Cross Entropy: %.3f nats' % mean_ce)
+
+```
+
+- calculate Cross-entropy using Keras
+
+```python
+
+# calculate cross entropy with keras
+from numpy import asarray
+from keras import backend
+from keras.losses import binary_crossentropy
+# prepare classification data
+p = asarray([1, 1, 1, 1, 1, 0, 0, 0, 0, 0])
+q = asarray([0.8, 0.9, 0.9, 0.6, 0.8, 0.1, 0.4, 0.2, 0.1, 0.3])
+# convert to keras variables
+y_true = backend.variable(p)
+y_pred = backend.variable(q)
+# calculate the average cross-entropy
+mean_ce = backend.eval(binary_crossentropy(y_true, y_pred))
+print('Average Cross Entropy: %.3f nats' % mean_ce)
+
+```
+
+### Intuition for Cross-Entropy on Predicted Probabilites
+
+예측 확률 분포가 목표 분포에서 멀어질수록 교차 엔트로피가 증가할 것입니다. 
+KL Divergence의 예를 통해 알수 있듯이 P가 크고 Q가 작거나 Q가 크고 P가 작으면 발산하기 때문입니다. 
+
+아래 코드를 통해 확인할 수 있습니다.
+```python
+
+# cross-entropy for predicted probability distribution vs label
+from math import log
+from matplotlib import pyplot
+ 
+# calculate cross-entropy
+def cross_entropy(p, q, ets=1e-15):
+	return -sum([p[i]*log(q[i]+ets) for i in range(len(p))])
+ 
+# define the target distribution for two events
+target = [0.0, 1.0]
+# define probabilities for the first event
+probs = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]
+# create probability distributions for the two events
+dists = [[1.0 - p, p] for p in probs]
+# calculate cross-entropy for each distribution
+ents = [cross_entropy(target, d) for d in dists]
+# plot probability distribution vs cross-entropy
+pyplot.plot([1-p for p in probs], ents, marker='.')
+pyplot.title('Probability Distribution vs Cross-Entropy')
+pyplot.xticks([1-p for p in probs], ['[%.1f,%.1f]'%(d[0],d[1]) for d in dists], rotation=70)
+pyplot.subplots_adjust(bottom=0.2)
+pyplot.xlabel('Probability Distribution')
+pyplot.ylabel('Cross-Entropy (nats)')
+pyplot.show()
+
+```
+
+일반적으로 Cross-Entropy 구간별 값의 의미는 다음과 같습니다.
+
+- Cross-Entropy = 0.00: Perfect Probabilities
+- Cross-Entropy < 0.02: Great Probabilites
+- Cross-Entropy < 0.05: On the right track
+- Cross-Entropy < 0.20: Fine
+- Cross-Entropy > 0.30 : Not great
+- Cross-Entropy > 1.00 : Terrible
+- Cross-Entropy > 2.00 : Something broken
+
+
+### Cross-Entropy Versus Log Loss
+
+Log(logistic) loss 역시 분류 문제에 loss function으로 사용됩니다. 
+
+많은 모델들이 MLE(Maximum likelihood estimation)을 기준으로 최적화 합니다. MLE는 관측 데이터를 잘 설명할 수 있는 파라미터 셋을 찾는 것입니다. 
+주어진 모델 파라미터 변수들을 정의하는 likelihood function을 선택하는 것이 포함됩니다.
+실제로 함수의 값을 최대화 하기 보다는 최소하 하는 것이 일반적이기 때문에 함수에 -값을 붙여줍니다.
+그래서 Negative Log Likelihood function이라고 말하기도 합니다. 
+
+참고로, Bernoulli 확률분포에 대한 likelihood function과 cross entropy는 동일한 계산을 가져옵니다. 
+
+보다 쉬운 이해를 위해 Maximum Likelihood 에 대해 이야기 하겠습니다. 
+#### [A Gentle Introduction to maximum Likelihood Estimation for Machine Learning](https://machinelearningmastery.com/what-is-maximum-likelihood-estimation-in-machine-learning/)
+
+Maximum Likelihood function은 
