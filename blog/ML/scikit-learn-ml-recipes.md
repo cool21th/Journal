@@ -133,12 +133,121 @@ print(metrics.confusion_matrix(expected, predicted))
 ```
 
 
-[Metrics To Evaluate Machine Learning Algoritms in Python](https://machinelearningmastery.com/metrics-evaluate-machine-learning-algorithms-python/)
+##[Additional Regression Model](https://machinelearningmastery.com/spot-check-regression-machine-learning-algorithms-python-scikit-learn/)
+
+
+1. Linear Regression
+
+Linear Regression은 Input Variable들을 Gaussian 분포를 따른다고 가정하기에 Input variable은 Output Variable만 관련있다고 정의합니다. 
+
+```python
+
+# Linear Regression
+import pandas
+from sklearn import model_selection
+from sklearn.linear_model import LinearRegression
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.data"
+names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+dataframe = pandas.read_csv(url, delim_whitespace=True, names=names)
+array = dataframe.values
+X = array[:,0:13]
+Y = array[:,13]
+seed = 7
+kfold = model_selection.KFold(n_splits=10, random_state=seed)
+model = LinearRegression()
+scoring = 'neg_mean_squared_error'
+results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+print(results.mean())
+
+```
+
+2. Ridge Regression
+
+Ridge Regression은 Linear Regression을 확장한 것으로 coefficient value의 제곱의 합으로 측정하여
+모델을 최소화 하기위해 변경된 손실 함수를 확장한 개념입니다. L2Norm 이라고도 합니다. 
+
+
+```python
+
+# Ridge Regression
+import pandas
+from sklearn import model_selection
+from sklearn.linear_model import Ridge
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.data"
+names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+dataframe = pandas.read_csv(url, delim_whitespace=True, names=names)
+array = dataframe.values
+X = array[:,0:13]
+Y = array[:,13]
+seed = 7
+kfold = model_selection.KFold(n_splits=10, random_state=seed)
+model = Ridge()
+scoring = 'neg_mean_squared_error'
+results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+print(results.mean())
+
+```
+
+
+3. LASSO Regression
+
+Ridge와 마찬가지로 모델의 복잡성을 최소화 하는 방법으로 coefficient 값의 절대값의 합으로 손실함수를 변경합니다.
+
+
+```python
+
+# Lasso Regression
+import pandas
+from sklearn import model_selection
+from sklearn.linear_model import Lasso
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.data"
+names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+dataframe = pandas.read_csv(url, delim_whitespace=True, names=names)
+array = dataframe.values
+X = array[:,0:13]
+Y = array[:,13]
+seed = 7
+kfold = model_selection.KFold(n_splits=10, random_state=seed)
+model = Lasso()
+scoring = 'neg_mean_squared_error'
+results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+print(results.mean())
+
+```
+
+
+4. ElasticNet Regression
+
+Ridge와 Lasso를 함께 사용하기 위한 목적입니다.
+
+```python
+
+# ElasticNet Regression
+import pandas
+from sklearn import model_selection
+from sklearn.linear_model import ElasticNet
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.data"
+names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
+dataframe = pandas.read_csv(url, delim_whitespace=True, names=names)
+array = dataframe.values
+X = array[:,0:13]
+Y = array[:,13]
+seed = 7
+kfold = model_selection.KFold(n_splits=10, random_state=seed)
+model = ElasticNet()
+scoring = 'neg_mean_squared_error'
+results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+print(results.mean())
+
+```
+
 
 
 지금까지는 알고리즘을 적용해서 결과에 대해 보는 것을 보았고 , 이번에는 모델에 대해 평가하는 방법에 대해 이야기 하겠습니다. 
 머신러닝에서 자주 사용하는 모델링 방법은 Classification(분류) 과 Regression(회귀)가 있습니다. 
 먼저 Classification에 대해 언급하도록 하겠습니다. 
+
+[Metrics To Evaluate Machine Learning Algoritms in Python](https://machinelearningmastery.com/metrics-evaluate-machine-learning-algorithms-python/)
 
 ## Classification metrics
 
@@ -373,6 +482,72 @@ results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring
 print("R^2: %.3f (%.3f)") % (results.mean(), results.std())
 
 ```
+
+## [Comapare Machine Learning Algorithms](https://machinelearningmastery.com/compare-machine-learning-algorithms-python-scikit-learn/)
+
+Scikit-learn으로 머신러니을 개발하면서, 여러 모델들간의 성능을 비교하는 것이 매우 중요합니다. 
+
+가장 좋은 머신러닝 모델을 선택하는 것은 어렵습니다. 각각의 모델의 성능 특성이 다르기 때문입니다. 
+
+또한 Resampling 방법중 하나인 Cross validation 을 통해 모델이 얼마나 정확한지도 확인할 수 있습니다. 
+그리고 Matplotlib를 이용해 간단한 시각화를 통해 명확하게 성능 구분도 가능합니다. 
+
+
+
+다음은 6개의 모델들을 비교하는 코드 입니다. 
+- Logistic Regression, Linear Discriminant Analysis, K-Nearest Neighbors, Classification and Regression tress, Naive bayes, SVM
+
+```python
+
+# Compare Algorithms
+import pandas
+import matplotlib.pyplot as plt
+from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+# load dataset
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = pandas.read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+# prepare configuration for cross validation test harness
+seed = 7
+# prepare models
+models = []
+models.append(('LR', LogisticRegression()))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+models.append(('CART', DecisionTreeClassifier()))
+models.append(('NB', GaussianNB()))
+models.append(('SVM', SVC()))
+# evaluate each model in turn
+results = []
+names = []
+scoring = 'accuracy'
+for name, model in models:
+	kfold = model_selection.KFold(n_splits=10, random_state=seed)
+	cv_results = model_selection.cross_val_score(model, X, Y, cv=kfold, scoring=scoring)
+	results.append(cv_results)
+	names.append(name)
+	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+	print(msg)
+# boxplot algorithm comparison
+fig = plt.figure()
+fig.suptitle('Algorithm Comparison')
+ax = fig.add_subplot(111)
+plt.boxplot(results)
+ax.set_xticklabels(names)
+plt.show()
+
+```
+
+
 
 
 
