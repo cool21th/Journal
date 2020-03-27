@@ -647,16 +647,50 @@ pyplot.show()
 
 ### Cross-Entropy Versus Log Loss
 
-Log(logistic) loss 역시 분류 문제에 loss function으로 사용됩니다. 
+Log(logistic) loss 역시 분류 문제에 loss function으로 사용됩니다. 특히, 딥러닝에서 사용하는데 그 이유는 다양한 확률분포를 가정할 수 있다는 이점을 가지고 있기 때문입니다.
 
 많은 모델들이 MLE(Maximum likelihood estimation)을 기준으로 최적화 합니다. MLE는 관측 데이터를 잘 설명할 수 있는 파라미터 셋을 찾는 것입니다. 
 주어진 모델 파라미터 변수들을 정의하는 likelihood function을 선택하는 것이 포함됩니다.
-실제로 함수의 값을 최대화 하기 보다는 최소하 하는 것이 일반적이기 때문에 함수에 -값을 붙여줍니다.
+실제로 함수의 값을 최대화 하기 보다는 최소화 하는 것이 일반적이기 때문에 함수에 -값을 붙여줍니다.
 그래서 Negative Log Likelihood function이라고 말하기도 합니다. 
 
-참고로, Bernoulli 확률분포에 대한 likelihood function과 cross entropy는 동일한 계산을 가져옵니다. 
+Log loss는 다음과 같이 정의 됩니다. E = -log(Q(x))
+P와 Q간의 loss function은 log(P(x)) - log(Q(x)) = log(P(x)/ Q(x)) 이며 KL(P || Q) 를 따르는 형태로 나옵니다.
+이러한 이점이 있기 때문에 딥러닝 모델에서 log loss를 손실함수(loss function)로 사용합니다.
 
-보다 쉬운 이해를 위해 Maximum Likelihood 에 대해 이야기 하겠습니다. 
-#### [A Gentle Introduction to maximum Likelihood Estimation for Machine Learning](https://machinelearningmastery.com/what-is-maximum-likelihood-estimation-in-machine-learning/)
+여기까지 이해하셨으면,  Bernoulli 확률분포에 대한 likelihood function과 cross entropy는 동일한 계산을 가져온다는 것을 캐치하실 수 있으실 것입니다.
+Binary Classification과 Bernoulli는 동일한 분포를 가지고 있기 때문입니다. 
 
-Maximum Likelihood function은 
+- negative log-likelihood(P, Q) = -(P(class 0) * log(Q(class 0 )) + P(class 1) * log(Q(class 1)))
+- Binary Classification : H(P, Q) = -(P(class 0) * log(Q(class 0)) + p(class 1) * log(Q(class 1)))
+
+
+```python
+
+# calculate log loss for classification problem with scikit-learn
+from sklearn.metrics import log_loss
+from numpy import asarray
+# define classification data
+p = [1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
+q = [0.8, 0.9, 0.9, 0.6, 0.8, 0.1, 0.4, 0.2, 0.1, 0.3]
+# define data as expected, e.g. probability for each event {0, 1}
+y_true = asarray([[1-v, v] for v in p])
+y_pred = asarray([[1-v, v] for v in q])
+# calculate the average log loss
+ll = log_loss(y_true, y_pred)
+print('Average Log Loss: %.3f' % ll)
+
+```
+
+MLE로 선형 회귀를 최적화 한다는 것은 Gaussian 연속 확률 분포안에서 목표 변수가 mean squarred error 함수를 최소화 한다는 것을 알 수 가정합니다. 이것은 Gaussian 확률 분포에서 cross-entropy를 가 된다는 것입니다. 
+
+아래 순서대로 보면 이해하실 수 있으실 것입니다. 
+
+- 선형 회귀는 distance 차이를 제곱한 값들 합의 최소값을 구합니다. 이것이 MSE 입니다.
+- MSE(Mean Squarred Error)가 (P)예측 분포와 (Q)사전 정의된 분포 두개 사이의 Gaussian 모델간의 Cross-Entropy가 됩니다.
+
+이를 통해 (-)log loss 로 구성된 손실은 training set에 정의된 경험적 분포와 model에 정의된 확률 분포 사이의 교차 엔트로피라는 것을 알수 있습니다.
+
+differential entropy 개념(확률 밀도 함수의 미분)으로 넘어가면, 두개의 Gaussian Random Variable 사이에서 MSE 계산은 두 variable 사이의 cross-entropy 계산이 됩니다. 따라서, Neural Network에서 MSE를 사용하는 것은 Cross-entropy를 사용하는 것과 동일하다는 것을 알 수 있습니다.
+
+
