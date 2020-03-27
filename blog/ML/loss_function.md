@@ -203,7 +203,7 @@ H(P, Q) = -sum x in X P(x) * log(Q(x))
 ### Cross-Entropy versus KL Divergence
 
 Cross-entropy 와 KL Divergence는 동일하지 않습니다. 
-KL(Kullback-Leibler) divergnece는 Total bit수가 아닌, Q에 대한 메세지 추가 비트수의 평균을 측정합니다.
+KL(Kullback-Leibler) divergnece는 전체 비트수가 아닌, P대신에 Q로 메세지를 나타내는데 필요한 평균 추가 비트수 측정합니다.
 
 
 비교하기에 앞서, KL Divergence에 대해 좀더 이야기 해보고자 합니다. 
@@ -379,5 +379,125 @@ print('JS(Q || P) Distance: %.3f' % js_qp)
 
 ```
 
+
+위의 글에서 볼 수 있듯이 KL Divergence 는 relative entropy인 것을 확인 할 수 있습니다. 
+
+- Cross-Entropy : Average number of total bits to represent an event from Q instead of P
+- Relative Entropy : Average number of extra bits to represents an event from Q instead of P
+
+따라서, P, Q의 교차 엔트로피는 P에 대한 엔트로피와 P와 Q의 KL Divergence로  표현이 가능합니다. 
+
+H(P, Q) = H(P) + KL(P || Q)
+
+
+### Calculate Cross-Entropy
+
+1. Two Discrete Probability Distribution
+
+```python
+
+# plot of distributions
+from matplotlib import pyplot
+# define distributions
+events = ['red', 'green', 'blue']
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+print('P=%.3f Q=%.3f' % (sum(p), sum(q)))
+# plot first distribution
+pyplot.subplot(2,1,1)
+pyplot.bar(events, p)
+# plot second distribution
+pyplot.subplot(2,1,2)
+pyplot.bar(events, q)
+# show the plot
+pyplot.show()
+
+```
+
+
+- Calculate Cross-Entropy Between Distribution
+
+```python
+
+# example of calculating cross entropy
+from math import log2
+ 
+# calculate cross entropy
+def cross_entropy(p, q):
+	return -sum([p[i]*log2(q[i]) for i in range(len(p))])
+ 
+# define data
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+# calculate cross entropy H(P, Q)
+ce_pq = cross_entropy(p, q)
+print('H(P, Q): %.3f bits' % ce_pq)
+# calculate cross entropy H(Q, P)
+ce_qp = cross_entropy(q, p)
+print('H(Q, P): %.3f bits' % ce_qp)
+
+```
+
+
+- Calculate Cross-Entropy Between a Distribution and Itself
+
+```python
+
+# example of calculating cross entropy for identical distributions
+from math import log2
+ 
+# calculate cross entropy
+def cross_entropy(p, q):
+	return -sum([p[i]*log2(q[i]) for i in range(len(p))])
+ 
+# define data
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+# calculate cross entropy H(P, P)
+ce_pp = cross_entropy(p, p)
+print('H(P, P): %.3f bits' % ce_pp)
+# calculate cross entropy H(Q, Q)
+ce_qq = cross_entropy(q, q)
+print('H(Q, Q): %.3f bits' % ce_qq)
+
+```
+
+- Calculate Cross-Entropy Using KL Divergence
+
+```python
+
+# example of calculating cross entropy with kl divergence
+from math import log2
+ 
+# calculate the kl divergence KL(P || Q)
+def kl_divergence(p, q):
+	return sum(p[i] * log2(p[i]/q[i]) for i in range(len(p)))
+ 
+# calculate entropy H(P)
+def entropy(p):
+	return -sum([p[i] * log2(p[i]) for i in range(len(p))])
+ 
+# calculate cross entropy H(P, Q)
+def cross_entropy(p, q):
+	return entropy(p) + kl_divergence(p, q)
+ 
+# define data
+p = [0.10, 0.40, 0.50]
+q = [0.80, 0.15, 0.05]
+# calculate H(P)
+en_p = entropy(p)
+print('H(P): %.3f bits' % en_p)
+# calculate kl divergence KL(P || Q)
+kl_pq = kl_divergence(p, q)
+print('KL(P || Q): %.3f bits' % kl_pq)
+# calculate cross entropy H(P, Q)
+ce_pq = cross_entropy(p, q)
+print('H(P, Q): %.3f bits' % ce_pq)
+
+```
+
+
+
+### Cross-Entropy as a Loss Function
 
 
