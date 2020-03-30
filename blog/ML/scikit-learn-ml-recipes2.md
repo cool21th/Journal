@@ -74,3 +74,35 @@ Ensemble 기법은 주어진 데이터셋을 활용해서 모델의 정확도를
 > ```
 
 
+3. Extra Trees([Extremely Randomized Trees classifier](https://www.geeksforgeeks.org/ml-extra-tree-classifier-for-feature-selection/))
+
+> Extra Trees 기법은  RandomForest 의 확장한 형태로, Forest tree 내에 상관관계가 적은 decision tree들을 결합하여 결과를 도출한 방식입니다. 
+> scikit-learn을 활용한 예시는 다음과 같습니다
+
+> ```python
+> 
+> # Extra Trees Classification
+> import pandas
+> from sklearn import model_selection
+> from sklearn.ensemble import ExtraTreesClassifier
+> url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+> names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+> dataframe = pandas.read_csv(url, names=names)
+> array = dataframe.values
+> X = array[:,0:8]
+> Y = array[:,8]
+> seed = 7
+> num_trees = 100
+> max_features = 7
+> kfold = model_selection.KFold(n_splits=10, random_state=seed)
+> model = ExtraTreesClassifier(n_estimators=num_trees, max_features=max_features)
+> results = model_selection.cross_val_score(model, X, Y, cv=kfold)
+> print(results.mean())
+> 
+> ```
+
+
+### Boosting Algorithms
+
+
+
