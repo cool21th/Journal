@@ -104,5 +104,82 @@ Ensemble 기법은 주어진 데이터셋을 활용해서 모델의 정확도를
 
 ### Boosting Algorithms
 
+Boosting Algoritms은 모델들을 순차적으로 훈련시키면서 앞선 모델의 error를 반영하면서 진행하는 방식입니다. 
+일반적으로 AdaBoost 와 Stochastic Gradient Boosting 두가지 방식이 있는데 이 두개를 중심으로 설명하겠습니다. 
+최근에는 많이 쓰는 것은 XGBoost, LightGBM 등이 있는데, 현재 정확도가 아주 높은 알고리즘으로 Kaggle에서 널리 쓰이고 있습니다.
+
+
+
+1. AdaBoost
+
+> AdaBoost 는 Boosting 계열의 Ensemble 모델 중 첫 성공적인 모델입니다. 
+> 일반적으로 모델이 얼마나 데이터 셋을 쉽게 분류하는지, 
+> 순차적인 모델이 앞선 모델의 알고리즘에 얼마나 영향을 받는지를 기준으로 동작합니다.
+
+> 다음은 AdaBoost의 예제입니다. 
+
+> ```python
+> 
+> # AdaBoost Classification
+> import pandas
+> from sklearn import model_selection
+> from sklearn.ensemble import AdaBoostClassifier
+> url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+> names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+> dataframe = pandas.read_csv(url, names=names)
+> array = dataframe.values
+> X = array[:,0:8]
+> Y = array[:,8]
+> seed = 7
+> num_trees = 30
+> kfold = model_selection.KFold(n_splits=10, random_state=seed)
+> model = AdaBoostClassifier(n_estimators=num_trees, random_state=seed)
+> results = model_selection.cross_val_score(model, X, Y, cv=kfold)
+> print(results.mean())
+> 
+> ```
+
+3. Voting Ensemble
+
+> Voting은 Machine learning의 Ensemble 알고리즘에서 가장 간단한 형태의 조합입니다
+> 먼저 두개 이상의 독립형 모델을 만든 후, voting 기준을 정한뒤 최종 예측결과를 도출하는 것입니다. 
+> 모델들의 가중치를 경험적으로나 손수 지정하는 것은 어렵습니다.
+> 특히나 하위 모델들의 가장 좋은 가중치만을 선정해서 적용하는 Stacking 방식은 Scikit-learn에서 제공해주고 있지 않습니다. 
+
+> Scikit-learn에서 VotingClassifier 클래스를 통해 기본적은 voting ensemble을 만들 수 있습니다. 
+> 다음 예는 logistic regression과 DecisionTreeClassifier, SVC(Support vector machine for classifier)를 조합한 형태입니다. 
+
+> ```python
+> 
+> # Voting Ensemble for Classification
+> import pandas
+> from sklearn import model_selection
+> from sklearn.linear_model import LogisticRegression
+> from sklearn.tree import DecisionTreeClassifier
+> from sklearn.svm import SVC
+> from sklearn.ensemble import VotingClassifier
+> url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+> names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+> dataframe = pandas.read_csv(url, names=names)
+> array = dataframe.values
+> X = array[:,0:8]
+> Y = array[:,8]
+> seed = 7
+> kfold = model_selection.KFold(n_splits=10, random_state=seed)
+> # create the sub models
+> estimators = []
+> model1 = LogisticRegression()
+> estimators.append(('logistic', model1))
+> model2 = DecisionTreeClassifier()
+> estimators.append(('cart', model2))
+> model3 = SVC()
+> estimators.append(('svm', model3))
+> # create the ensemble model
+> ensemble = VotingClassifier(estimators)
+> results = model_selection.cross_val_score(ensemble, X, Y, cv=kfold)
+> print(results.mean())
+> 
+> ```
+
 
 
