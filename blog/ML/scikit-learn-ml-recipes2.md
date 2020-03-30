@@ -1,4 +1,4 @@
-Ensemble, Pipeline 등의 기법을  Scikit-learn을 가지고 손쉽게 활용하는 부분에 대해 이야기해보겠습니다. 
+Ensemble, Pipeline 등의 기법, 모델 저장 및 로드에   Scikit-learn을 가지고 손쉽게 활용하는 부분에 대해 이야기해보겠습니다. 
 
 
 ## Ensemble
@@ -292,6 +292,104 @@ print(results.mean())
 ```
 
 
+## Save and Load Model
+
+[Save and Load Machine Learning Models in Python with Scikit-learn](https://machinelearningmastery.com/save-load-machine-learning-models-python-scikit-learn/)
+
+지금까지 모델을 훈련하고 평가하는데 까지 배웠다면, 이제는 모델을 파일로 저장하고, 로딩하는 영역에 대해 논의하겠습니다. 
+
+
+### Finalize Your Model with pickle
+
+Pickle은 Python 객체를 Serialization 한 형태로 만드는 표준입니다. 
+객체의 Serialization이 가지고 있는 의미는 Byte로 변환시켜 쉽게 저장하거나 전송할 수 있도록 하는 변환방법입니다. 
+
+Pickle 라이브러리를 통해 우리는 쉽게 머신러닝 모델을 저장하고 로딩할 수 있습니다. 
+
+다음 예를 통해 모델을 저장하고 로딩하는 것을 확인할 수 있습니다. 
+
+```python
+
+# Save Model Using Pickle
+import pandas
+from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+import pickle
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = pandas.read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+test_size = 0.33
+seed = 7
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y, test_size=test_size, random_state=seed)
+# Fit the model on training set
+model = LogisticRegression()
+model.fit(X_train, Y_train)
+# save the model to disk
+filename = 'finalized_model.sav'
+pickle.dump(model, open(filename, 'wb'))
+ 
+# some time later...
+ 
+# load the model from disk
+loaded_model = pickle.load(open(filename, 'rb'))
+result = loaded_model.score(X_test, Y_test)
+print(result)
+
+```
+
+### Finalize Your Model with joblib
+
+Joblib 는 Python job의 pipeline을 제공하는 pScipy의 에코시스템중 하나입니다. 
+이는 효과적으로 NumPy와 쉽게 연동을 지원해줍니다. 
+
+많은 매개변수가 필요하거나 Knn(K-Nearest Neighbor)와 같은 전체 데이터 세트를 저장할 경우 유용한 방법입니다. 
+
+아래 예를 통해 알 수 있듯이 pickle과 비교해서 사용하는 방법이 크게 다르지 않습니다.
+
+```python
+
+# Save Model Using joblib
+import pandas
+from sklearn import model_selection
+from sklearn.linear_model import LogisticRegression
+import joblib
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = pandas.read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+test_size = 0.33
+seed = 7
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y, test_size=test_size, random_state=seed)
+# Fit the model on training set
+model = LogisticRegression()
+model.fit(X_train, Y_train)
+# save the model to disk
+filename = 'finalized_model.sav'
+joblib.dump(model, filename)
+ 
+# some time later...
+ 
+# load the model from disk
+loaded_model = joblib.load(filename)
+result = loaded_model.score(X_test, Y_test)
+print(result)
+
+```
+
+### Tips for Finalizing Your Model
+
+머신러닝 모델을 저장하고 로딩할 때 3가지를 기준으로 고려하면 향후 도움이 될 것입니다. 
+
+- Python version : Python Major version 이 같아야 합니다. 때로는 Minor version도 확인이 필요할 수 있습니다. 
+- Library version : 주요 library version이 같아야 합니다. NumPy와 Scikit-learn은 거의 제한을 두지는 않습니다.
+- Manual Serialization : 학습된 모델의 매개 변수를 수동으로 다른 플랫폼으로 옮길 수 있습니다. 학습된 모델의 매개변수를 사용하는 것은 쉽게 코드로 구현이 가능합니다.
+
+만들어진 모델의 라이브러리 버전을 기록을 해놓으면(requirements 등) 새로운 플랫폼에서 load할지 다시 훈련 시킬지를 판단하기 쉬워집니다.
 
 
 
