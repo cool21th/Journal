@@ -182,4 +182,116 @@ Boosting Algoritms은 모델들을 순차적으로 훈련시키면서 앞선 모
 > ```
 
 
+## Machine Learning Workflows with Pipelines
+
+[Automated Machine Learning Workflows with Pipelines in Python and scikit-learn](https://machinelearningmastery.com/automate-machine-learning-workflows-pipelines-python-scikit-learn/)
+
+Scikit-learn에서는 Machine learning workflow 를 정의해주는 표준적이고 일반적인 Pipeline을 제공해주고 있습니다.
+Pandas로 데이터를 전처리하고, Scikit-learn에서 모델을 만들고, 평가하는 가장 일반적인 방법에서 시작하겟습니다.
+
+Pipeline을 쓰는 이유는 데이터간의 상관관계를 줄이고, 모델의 성능을 올리는 효과적인 방법중 하나입니다.
+Data Preparation과 Feature Extraction 과정에서 Pipeline을 활용한 방법을 설명하도록 하겠습니다.
+
+### Pipeline 1: Data Preparation and Modeling
+
+머신러닝 모델을 Production 상황에서 잘 돌아가려면, trainig set와 test set의 분리를 명확하게 해줘야 합니다. 
+
+예를들어 Learning 전에 정규화 또는 표준화를 훈련데이터 셋 전체에 취하는 방법은 적절한 테스트 방법은 아닙니다. 
+왜냐하면 훈련에 쓰일 데이터셋이 테스트에 쓰일 데이터셋에 영향을 받을 가능성이 높기 때문입니다. 
+
+Pipeline을 만드는 것은 교차 검층 절차를 통해 표준화를 각 Fold에 한해서만 적용합니다. 
+
+좀더 쉽게 이해하기 위해 다시 설명을 하면, 전체 데이터 대해 정규화, 표준화를 수행후 데이터를 여러개로 나눈다 하더라도
+이미 전체 데이터의 영향을 받은 형태가 됩니다. 
+하지만, 데이터를 특정기준으로 나누고(K_fold) 난 후, 나눠진 데이터에서만 정규화, 표준화를 진행한다면 해당 셋 내에서만 진행이 되어
+좀더 성능 좋은 모델이 생성됩니다. 
+
+이번 예시를 통해 Pipeline을 통해 Standardize the data와 LDA(Linear Discriminant Anlysis)를 적용한 모델 생성을 볼 수 있습니다. 
+
+```python
+
+# Create a pipeline that standardizes the data then creates a model
+from pandas import read_csv
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+# load data
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+# create pipeline
+estimators = []
+estimators.append(('standardize', StandardScaler()))
+estimators.append(('lda', LinearDiscriminantAnalysis()))
+model = Pipeline(estimators)
+# evaluate pipeline
+seed = 7
+kfold = KFold(n_splits=10, random_state=seed)
+results = cross_val_score(model, X, Y, cv=kfold)
+print(results.mean())
+
+```
+
+
+### Pipeline 2: Feature Extraction and Modeling
+
+Feature extraction 역시 데이터간의 영향을 받는 과정중 하나입니다. 
+그래서, Data Preparation 과정과 마찬가지로 훈련 데이터셋의 데이터를 반드시 제한해줘야 합니다. 
+
+Pipeline 모듈에서는 FeatureUnion 함수를 제공해 교차 검증을 수행하면서, 
+훈련대상의 각 데이터 셋에서 여러 feature들을 선택하고 추출한 후 
+대상 feature들을 결합이 가능하게 해줍니다. 
+이렇게 결합된 feature 들로 최종 모델을 만들 수 있습니다.
+
+다음 예시의 순서는 다음과 같습니다.
+
+1. Feature Extraction with Principal Component Analysis (3 features)
+2. Feature Extraction with Statistical Selection (6 features)
+3. Feature Union
+4. Learn a Logistic Regression Model
+
+```python
+
+# Create a pipeline that extracts features from the data then creates a model
+from pandas import read_csv
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import Pipeline
+from sklearn.pipeline import FeatureUnion
+from sklearn.linear_model import LogisticRegression
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import SelectKBest
+# load data
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = read_csv(url, names=names)
+array = dataframe.values
+X = array[:,0:8]
+Y = array[:,8]
+# create feature union
+features = []
+features.append(('pca', PCA(n_components=3)))
+features.append(('select_best', SelectKBest(k=6)))
+feature_union = FeatureUnion(features)
+# create pipeline
+estimators = []
+estimators.append(('feature_union', feature_union))
+estimators.append(('logistic', LogisticRegression()))
+model = Pipeline(estimators)
+# evaluate pipeline
+seed = 7
+kfold = KFold(n_splits=10, random_state=seed)
+results = cross_val_score(model, X, Y, cv=kfold)
+print(results.mean())
+
+```
+
+
+
+
 
