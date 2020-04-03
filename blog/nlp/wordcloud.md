@@ -4,6 +4,7 @@
 # Thanks : https://www.kaggle.com/aashita/word-clouds-of-various-shapes ##
 
 from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
 
 def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), color = 'white',
                    title = None, title_size=40, image_color=False):
@@ -35,5 +36,14 @@ def plot_wordcloud(text, mask=None, max_words=200, max_font_size=100, figure_siz
     plt.tight_layout()  
     
 plot_wordcloud(train.loc[train['sentiment'] == 'neutral', 'text'].append(test.loc[test['sentiment'] == 'neutral', 'text']), title="Word Cloud of Neutral tweets",color = 'white')
+
+```
+
+```python
+plot_wordcloud(train.loc[train['sentiment'] == 'positive', 'text'].append(test.loc[test['sentiment'] == 'positive', 'text']), title="Word Cloud of Positive tweets",color = 'green')
+```
+
+```python
+plot_wordcloud(train.loc[train['sentiment'] == 'negative', 'text'].append(test.loc[test['sentiment'] == 'negative', 'text']), title="Word Cloud of negative tweets",color = 'red')
 
 ```
