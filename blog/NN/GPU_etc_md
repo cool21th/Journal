@@ -1,0 +1,17 @@
+### (Kaggle)The Power of GPU
+
+-[참고](https://www.kaggle.com/vinhnguyen/gpu-acceleration-for-lightgbm/)
+
+FYI, Kaggle provides us the use of 7 Tesla P100 GPU's simultaneously. Below are some tips. Python models will not run GPU by default. You must turn GPU on. First, activate GPU in kaggle kernels. Second, if using CatBoost, add the following hyperparameter, task_type = 'GPU'. If using XGBoost, add the following hyperparameter, 'tree_method': 'gpu_hist' or tree_method': 'gpu_exact'. If using LGBM, follow the instructions in this kernel to recompile GPU LGBM, then add the following 3 hyperparameters 'device': 'gpu', 'gpu_platform_id': 0, and 'gpu_device_id': 0. Note: many posted kernels regarding CatBoost and XGBoost don't use GPU and can actually be 4x faster with GPU activated!
+
+You are allowed to execute 7 GPU kernels simultaneously for 9 hour sessions. In one evening, you can train 100 models!! My final solution is a blend of dozens of LGBM, CatBoost and XGBoost. In one evening, you can train your models on a combined one billion generated new rows of augmented data using the power of Kaggle's GPU's (where 7 have a total cost of $49000!!)
+
+In this comp, I found that CatBoost achieved an LB 0.001 greater than LGBM. That's it. Enjoy the power
+
+
+
+Great kernel Federico, it's good for people to see the power of GPU. However, GPU is much faster than you demonstrate. LGBM-CPU is the fastest CPU and LGBM-GPU is the slowest GPU, therefore you only observed a 1.6x speedup. (If you used t=6 data augmentation, you would see a 2.1x speedup.)
+
+The true winner is CatBoost-GPU. If you use CatBoost-GPU, it can process 4x more augmentation (1,361,950 rows instead of 336,078) and complete in only 593 seconds. Therefore CatBoost is 44x faster than LGBM-CPU (11x faster and does 4x the work)!! Furthermore, CatBoost scores 0.92247 CV (with the same seed) compared to LGBM's 0.91667 CV.
+
+
